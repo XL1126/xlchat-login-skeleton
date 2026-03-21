@@ -1,8 +1,8 @@
 const nodemailer = require('nodemailer');
 
 const transporter = nodemailer.createTransport({
-  host: 'smtp.qq.com',
-  port: 587,
+  host: process.env.EMAIL_HOST || 'smtp.qq.com',
+  port: parseInt(process.env.EMAIL_PORT) || 587,
   secure: false,
   auth: {
     user: process.env.EMAIL_USER,
@@ -12,7 +12,7 @@ const transporter = nodemailer.createTransport({
 
 async function sendVerificationCode(email, code) {
   const mailOptions = {
-    from: `XL Chat <${process.env.EMAIL_USER}>`,
+    from: `XL Chat <${process.env.EMAIL_FROM || process.env.EMAIL_USER}>`,
     to: email,
     subject: 'XL Chat 验证码',
     text: `您的验证码是：${code}\n有效期5分钟，请尽快使用。`,
@@ -24,7 +24,7 @@ async function sendVerificationCode(email, code) {
 
 async function sendPasswordResetEmail(email, resetUrl) {
   const mailOptions = {
-    from: `XL Chat <${process.env.EMAIL_USER}>`,
+    from: `XL Chat <${process.env.EMAIL_FROM || process.env.EMAIL_USER}>`,
     to: email,
     subject: 'XL Chat 重置密码',
     text: `请点击以下链接重置密码：${resetUrl}\n链接有效期15分钟。`,
