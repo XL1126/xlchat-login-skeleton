@@ -251,7 +251,3 @@ XL-chat/
 当前版本为**半成品**，仅实现了用户登录注册功能。XL Chat 的核心聊天功能需要开发者自行根据需求进行后续开发。本项目仅提供认证系统的基础框架，使用者需自行承担开发完整功能的责任。
 
 ---
-
-<p align="center">
-  <img src="https://img.shields.io/badge/dynamic/json?&label=&query=kaomoji&url=https://xl1126.top/api/kaomoji&style=for-the-badge" alt="kaomoji">
-</p>
