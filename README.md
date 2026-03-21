@@ -13,7 +13,7 @@
 XL Chat 是一个现代化的用户认证系统，采用前后端分离架构实现。目前已完成登录、注册、密码重置等核心功能，可作为完整聊天系统的前端入口。
 
 **当前版本状态**：✅ 已完成 - 用户认证系统（半成品）<br>
-**计划功能**：❌ 未完成 - AI 聊天主功能（需自行开发）
+**计划功能**：❌ 未完成 - AI 聊天主功能
 
 ## 🚀 快速开始
 
@@ -24,9 +24,15 @@ XL Chat 是一个现代化的用户认证系统，采用前后端分离架构实
 - npm 或 yarn
 
 ### 安装步骤
-
 #### 1. 安装依赖
 
+执行下面的py文件快速安装
+
+```bash
+# 执行一键安装脚本
+python setup.py
+```
+或手动安装
 ```bash
 # 安装根项目依赖
 npm install
@@ -36,7 +42,7 @@ cd client
 npm install
 cd ..
 ```
-
+---
 #### 2. 配置环境变量
 
 复制 `.env.example` 为 `.env`，并根据实际情况修改：
@@ -45,31 +51,34 @@ cd ..
 cp .env.example .env
 ```
 
-> ⚠️ **重要提示**：`.env` 文件包含敏感信息（邮箱密码、JWT密钥等），**不会开源**，请自行配置。
+> ⚠️ **重要提示**：`.env` 文件包含敏感信息（邮箱密码、JWT密钥等），**请保管好文件**。
 
 编辑 `.env` 文件，配置以下变量：
 
 ```env
 # 服务器配置
-PORT=3000
+PORT=3000                          # 服务器端口
+NODE_ENV=development               # 环境模式：development（开发）/ production（生产）
 
 # JWT密钥（请修改为随机字符串）
-JWT_SECRET=your-secret-key-here
+JWT_SECRET=your-secret-key-here    # 用于加密 Token 的密钥，部署时必须更换
 
 # 邮件配置
-EMAIL_HOST=smtp.example.com
-EMAIL_PORT=587
-EMAIL_USER=your-email@example.com
-EMAIL_PASS=your-email-password
-EMAIL_FROM=noreply@example.com
+EMAIL_HOST=smtp.example.com        # SMTP 服务器地址，如 smtp.qq.com、smtp.gmail.com
+EMAIL_PORT=587                     # SMTP 端口，QQ/网易邮箱用 587，SSL 用 465
+EMAIL_USER=your-email@example.com  # 发件人邮箱
+EMAIL_PASS=your-email-password      # 邮箱授权码（非登录密码）
+EMAIL_FROM=noreply@example.com     # 自定义发件人名称（不填则默认使用 EMAIL_USER）
 
 # 前端URL（用于邮件中的链接，⚠️ 重要：部署时必须修改为实际域名）
-CLIENT_URL=http://localhost:5173
+CLIENT_URL=http://localhost:5173   # 邮件里密码重置链接的域名
 ```
-
+---
 #### 3. 启动服务
 
 **方式一：使用启动脚本（推荐）**
+
+根目录下的launcher.py文件本身是 **生成启动脚本** 的，并不是启动脚本
 
 ```bash
 # 查看帮助
@@ -103,12 +112,19 @@ npm run server:dev
 # 仅运行前端
 npm run client:dev
 ```
+手动启动还可以更复杂一点
+```bash
+# 开启后端服务
+node server/index.js
 
+# 开启前端服务
+cd client
+npm run dev
+```
+---
 ### 4. 配置 SSL 证书（如需使用 HTTPS）
 
-> ⚠️ **注意**：`certs/` 目录下的 SSL 证书文件**不会开源**，请自行准备或从服务器迁移证书。
-
-如果你需要使用 HTTPS 模式，需要准备 SSL 证书并放置到 `client/certs/` 目录：
+如果你需要使用 HTTPS 模式，需要准备 SSL 证书并放置到 `client/certs/` 目录下：
 
 ```
 client/certs/
@@ -116,26 +132,27 @@ client/certs/
 └── privatekey.pem   # 私钥文件（必填）
 ```
 
-> ⚠️ **重要**：证书文件名必须使用 `fullchain.pem` 和 `privatekey.pem`，配置文件中已写死这两个文件名。
+> ⚠️ **注意**：证书文件名必须使用 `fullchain.pem` 和 `privatekey.pem`这；两个名称，配置文件中指定了使用在这个两个名称。
 
 证书准备方法：
-1. **从服务器迁移**：从服务器上的 `/root/XL-HTML/xl1126.top/` 目录下载，并重命名为上述文件名
-2. **自行申请**：使用 Let's Encrypt、阿里云、腾讯云等申请免费证书
-3. **自签名证书**：仅用于本地开发（浏览器会显示安全警告）
+可以前往 [这个](https://github.com/XL1126/xlchat-login-skeleton/tree/main/client/certs) 目录查看如何配置证书
 
+---
 ### 5. 访问应用
 
 启动后访问以下地址：
 
 - **HTTP 模式**: http://localhost:5173
-- **HTTPS 模式**: https://localhost:443（需接受证书警告）
+- **HTTPS 模式**: https://localhost（需接受证书警告）
+  - 注意：https://localhost 可能无法访问，可以尝试访问 https://127.0.0.1/ 或 https://[设备局域网ip地址]/
 - **后端 API**: http://localhost:3000
 
-## 📁 项目结构
+## 📁 基本项目结构
 
 ```
 XL-chat/
 ├── client/                 # 前端代码 (React 18 + Vite)
+│   ├── certs/               # SSL 证书（HTTPS 使用）
 │   ├── src/
 │   │   ├── components/      # React 组件
 │   │   ├── contexts/       # React Context
@@ -148,19 +165,17 @@ XL-chat/
 │   ├── index.js          # 服务器入口
 │   ├── database.js       # 数据库配置
 │   └── mailer.js        # 邮件发送模块
-├── database/             # SQLite 数据库文件
+├── database/             # SQLite 数据库文件（项目会自动创建）
 ├── images/              # 项目截图
-├── certs/               # SSL 证书（HTTPS 使用）
 ├── launcher.py          # 启动脚本生成器
+├── setup.py             # 快速安装第三方库
 ├── package.json        # 根项目依赖
 ├── .env                # 环境变量（需手动创建）
 ├── .env.example        # 环境变量示例
 └── README.md           # 项目说明
 ```
 
-## ✨ 功能特性
-
-### ✅ 已完成
+## ✨ 现有功能
 
 - [x] **用户注册** - 邮箱验证码注册
 - [x] **用户登录** - 密码登录 / 验证码登录
@@ -172,17 +187,6 @@ XL-chat/
 - [x] **丝滑动画** - 270ms 进出场动画
 - [x] **深色主题** - 现代 UI 设计
 - [x] **防自动填充** - 防止浏览器自动填充
-
-### ❌ 待开发
-
-- [ ] AI 聊天功能
-- [ ] 聊天记录存储
-- [ ] 用户设置
-- [ ] 好友系统
-- [ ] 群聊功能
-- [ ] 文件传输
-- [ ] 消息推送
-- [ ] 其他...
 
 ## 🛠️ 技术栈
 
@@ -219,13 +223,7 @@ XL-chat/
 3. **验证码**：一次性验证码，5分钟有效期
 4. **邮件链接**：重置链接有时效性
 
-## ⚙️ 部署指南
-
-### 本地部署
-
-按照上述"快速开始"步骤即可。
-
-### 服务器部署
+## ⚙️ 服务器部署指南
 
 1. 安装 Node.js 和 Python
 2. 克隆项目到服务器
@@ -235,14 +233,10 @@ XL-chat/
 6. 配置 Nginx 反向代理（可选）
 7. 配置 SSL 证书（生产环境推荐使用 HTTPS）
 
-## 🤝 贡献指南
-
-欢迎提交 Issue 和 Pull Request！
-
 ### 开发人员
 
 - **XL1126** - 项目创始人 [@XL1126](https://github.com/XL1126)
-- **Trae AI** - 大部分代码由 AI 生成
+- **Trae AI** - 大部分代码由 Trae AI 生成
 
 ### 联系方式
 
@@ -252,12 +246,12 @@ XL-chat/
 
 本项目采用 **MIT 许可证** 进行开源。
 
-## ⚠️ 免责声明
+## ⚠️ 其他声明
 
 当前版本为**半成品**，仅实现了用户登录注册功能。XL Chat 的核心聊天功能需要开发者自行根据需求进行后续开发。本项目仅提供认证系统的基础框架，使用者需自行承担开发完整功能的责任。
 
 ---
 
 <p align="center">
-  Made with ❤️ by <a href="https://github.com/XL1126">XL1126</a> & AI
+  <img src="https://img.shields.io/badge/dynamic/json?&label=&query=kaomoji&url=https://xl1126.top/api/kaomoji&style=for-the-badge" alt="kaomoji">
 </p>
