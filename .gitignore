@@ -1,0 +1,46 @@
+# Environment variables (contain sensitive data)
+.env
+.env.local
+.env.*.local
+
+# SSL/TLS Certificates (sensitive)
+*.pem
+*.key
+*.crt
+*.cer
+
+# SSH Keys (sensitive)
+.ssh/
+
+# Database
+*.sqlite
+*.sqlite3
+*.db
+
+# Dependencies
+node_modules/
+__pycache__/
+*.pyc
+*.pyo
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Build outputs
+dist/
+build/
+
+# Misc
+*.bak
+*.tmp

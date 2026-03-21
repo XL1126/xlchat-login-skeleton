@@ -1,0 +1,357 @@
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 18px;
+}
+
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #000;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 400px;
+  padding: 40px 32px;
+}
+
+.logo {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.logo svg {
+  color: #6780FE;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: #bbb;
+}
+
+.ds-form-item__content {
+  width: 100%;
+}
+
+.ds-input {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 48px;
+  background-color: rgb(27, 27, 28);
+  border: 0.8px solid rgba(255, 255, 255, 0.12);
+  border-radius: 28px;
+  padding: 0 10px;
+}
+
+.ds-input:focus-within {
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: none;
+}
+
+.ds-input__input {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: rgb(249, 250, 251);
+  font-size: 14px;
+  line-height: 25px;
+  padding: 0 6px;
+}
+
+.ds-input__input::placeholder {
+  color: rgb(129, 133, 140);
+}
+
+.ds-input__input:-webkit-autofill,
+.ds-input__input:-webkit-autofill:hover,
+.ds-input__input:-webkit-autofill:focus,
+.ds-input__input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px rgb(27, 27, 28) inset !important;
+  -webkit-text-fill-color: rgb(249, 250, 251) !important;
+  caret-color: rgb(249, 250, 251) !important;
+  transition: background-color 5000s ease-in-out 0s !important;
+}
+
+.ds-input__input::-webkit-contacts-auto-fill-button,
+.ds-input__input::-webkit-caps-lock-indicator,
+.ds-input__input::-webkit-credentials-auto-fill-button {
+  visibility: hidden;
+  position: absolute;
+  right: 0;
+}
+
+.ds-input__suffix {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.ds-verify-code-input-divider {
+  width: 1px;
+  height: 20px;
+  background-color: rgba(255, 255, 255, 0.12);
+  margin-right: 12px;
+}
+
+.ds-link-button {
+  position: relative;
+  background: none;
+  border: none;
+  color: rgb(103, 158, 254);
+  font-size: 14px;
+  cursor: pointer;
+  padding: 0;
+  height: 22px;
+  border-radius: 0;
+  white-space: nowrap;
+  transition: opacity 0.2s;
+  display: flex;
+  align-items: center;
+}
+
+.ds-link-button:hover:not(:disabled) {
+  opacity: 0.8;
+}
+
+.ds-link-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.ds-link-button__text {
+  position: relative;
+  z-index: 1;
+}
+
+.ds-focus-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 4px;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.ds-link-button:focus-visible .ds-focus-ring {
+  outline-color: #6780FE;
+}
+
+.password-input-wrapper {
+  position: relative;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  padding: 4px;
+  z-index: 10;
+}
+
+.code-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.login-type-tabs {
+  display: flex;
+  margin-bottom: 24px;
+  border-bottom: 1px solid #3a3a46;
+}
+
+.login-type-tab {
+  flex: 1;
+  padding: 12px;
+  background: none;
+  border: none;
+  color: #bbb;
+  font-size: 14px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+}
+
+.login-type-tab.active {
+  color: #6780FE;
+  border-bottom-color: #6780FE;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 14px;
+  background-color: #6780FE;
+  border: none;
+  border-radius: 28px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  height: 48px;
+}
+
+.submit-btn:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.submit-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.form-links {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.form-link {
+  color: #6780FE;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.form-link:hover {
+  text-decoration: underline;
+}
+
+.error-message {
+  color: #ff6b6b;
+  font-size: 14px;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.success-message {
+  color: #51cf66;
+  font-size: 14px;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.home-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  text-align: center;
+  padding: 20px;
+}
+
+.home-container h1 {
+  font-size: 32px;
+  margin-bottom: 16px;
+}
+
+.home-container p {
+  font-size: 18px;
+  color: #bbb;
+  margin-bottom: 32px;
+}
+
+.logout-btn {
+  padding: 12px 32px;
+  background-color: rgb(27, 27, 28);
+  border: 0.8px solid rgba(255, 255, 255, 0.12);
+  border-radius: 28px;
+  color: #f8faff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  height: 48px;
+}
+
+.logout-btn:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.forgot-password-title {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.forgot-password-desc {
+  font-size: 14px;
+  color: #bbb;
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.back-to-login {
+  text-align: center;
+  margin-top: 24px;
+}
+
+.ds-toast-container {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+}
+
+.ds-toast-container--top {
+  top: 20px;
+}
+
+.ds-toast {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  background-color: #1a1a1f;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  animation: fadeIn 0.3s ease-out;
+}
+
+.ds-toast--error {
+  border-left: 4px solid #F59E0B;
+}
+
+.ds-toast__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ds-toast__content {
+  color: #f8faff;
+  font-size: 14px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
