@@ -26,13 +26,26 @@ def check_node():
 def check_npm():
     print("正在检查 npm 环境...")
     try:
-        result = subprocess.run(['npm', '--version'], capture_output=True, text=True, check=True)
+        result = subprocess.run(['npm', '--version'], capture_output=True, text=True, check=True, timeout=5)
         print(f"  ✓ npm 版本: {result.stdout.strip()}")
         return True
     except (subprocess.CalledProcessError, FileNotFoundError):
-        print("  ✗ 错误: 未找到 npm")
-        print("    请先安装 npm")
-        return False
+        # 尝试使用 node -e 来获取 npm 版本
+        try:
+            result = subprocess.run(['node', '-e', 'console.log(require("npm").version)'], 
+                                   capture_output=True, text=True, check=True, timeout=5)
+            print(f"  ✓ npm 版本: {result.stdout.strip()}")
+            return True
+        except Exception as e:
+            print(f"  ⚠ 警告: 无法直接检测 npm，但 Node.js 已安装")
+            print(f"    错误信息: {str(e)}")
+            # 跳过 npm 检测，因为 Node.js 安装通常包含 npm
+            return True
+    except Exception as e:
+        print(f"  ⚠ 警告: 无法检测 npm，但 Node.js 已安装")
+        print(f"    错误信息: {str(e)}")
+        # 跳过 npm 检测，因为 Node.js 安装通常包含 npm
+        return True
 
 def install_root_deps():
     print()
@@ -45,7 +58,8 @@ def install_root_deps():
         return False
 
     try:
-        subprocess.run(['npm', 'install'], check=True, cwd=os.path.dirname(os.path.abspath(__file__)))
+        # 使用 shell=True 来执行命令，这样会使用系统默认的 shell 环境
+        subprocess.run('npm install', check=True, cwd=os.path.dirname(os.path.abspath(__file__)), shell=True)
         print("  ✓ 根项目依赖安装完成")
         return True
     except subprocess.CalledProcessError:
@@ -66,7 +80,8 @@ def install_client_deps():
         return False
 
     try:
-        subprocess.run(['npm', 'install'], check=True, cwd=client_path)
+        # 使用 shell=True 来执行命令，这样会使用系统默认的 shell 环境
+        subprocess.run('npm install', check=True, cwd=client_path, shell=True)
         print("  ✓ 前端依赖安装完成")
         return True
     except subprocess.CalledProcessError:

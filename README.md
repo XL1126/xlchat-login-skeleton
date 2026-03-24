@@ -1,7 +1,7 @@
 # XL Chat - 登录系统
 
 <p align="center">
-  <img src="./images/screenshot.png" alt="XL Chat 截图" width="600">
+  <img src="./client/public/screenshot.png" alt="XL Chat 截图" width="600">
 </p>
 
 <p align="center">
@@ -68,10 +68,12 @@ EMAIL_HOST=smtp.example.com        # SMTP 服务器地址，如 smtp.qq.com、sm
 EMAIL_PORT=587                     # SMTP 端口，QQ/网易邮箱用 587，SSL 用 465
 EMAIL_USER=your-email@example.com  # 发件人邮箱
 EMAIL_PASS=your-email-password      # 邮箱授权码（非登录密码）
-EMAIL_FROM=noreply@example.com     # 自定义发件人名称（不填则默认使用 EMAIL_USER）
 
 # 前端URL（用于邮件中的链接，⚠️ 重要：部署时必须修改为实际域名）
 CLIENT_URL=http://localhost:5173   # 邮件里密码重置链接的域名
+                                  # 支持动态修改，无需重启服务器
+                                  # 自动处理末尾斜杠，避免双斜杠问题
+                                  # 未配置时默认使用 http://localhost/
 ```
 ---
 #### 3. 启动服务

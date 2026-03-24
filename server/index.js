@@ -1,10 +1,70 @@
-require('dotenv').config();
+const fs = require('fs');
+const path = require('path');
+const crypto = require('crypto');
+
+// 生成随机密钥
+function generateSecretKey() {
+  return crypto.randomBytes(32).toString('hex');
+}
+
+// 动态加载环境变量
+function loadEnv() {
+  const envPath = path.join(__dirname, '../.env');
+  let envContent = '';
+  
+  if (fs.existsSync(envPath)) {
+    envContent = fs.readFileSync(envPath, 'utf8');
+    const envVars = envContent.split('\n');
+    
+    envVars.forEach(line => {
+      const [key, value] = line.split('=').map(item => item.trim());
+      if (key && !key.startsWith('#')) {
+        process.env[key] = value;
+      }
+    });
+  }
+  
+  // 检查并自动生成 JWT_SECRET
+  if (!process.env.JWT_SECRET || process.env.JWT_SECRET === 'your-secret-key-here') {
+    const newSecret = generateSecretKey();
+    process.env.JWT_SECRET = newSecret;
+    
+    // 更新或创建 .env 文件
+    if (fs.existsSync(envPath)) {
+      // 替换现有的 JWT_SECRET
+      if (envContent.includes('JWT_SECRET=')) {
+        envContent = envContent.replace(/JWT_SECRET=.*/g, `JWT_SECRET=${newSecret}`);
+      } else {
+        // 添加 JWT_SECRET
+        envContent += `\nJWT_SECRET=${newSecret}\n`;
+      }
+    } else {
+      // 创建新的 .env 文件
+      envContent = `# 服务器配置\nPORT=3000\nNODE_ENV=development\n\n# JWT密钥\nJWT_SECRET=${newSecret}\n\n# 邮件配置\nEMAIL_HOST=smtp.qq.com\nEMAIL_PORT=587\nEMAIL_USER=your-email@example.com\nEMAIL_PASS=your-email-password\n\n# 前端URL\nCLIENT_URL=http://localhost:5173\n`;
+    }
+    
+    // 写入 .env 文件
+    fs.writeFileSync(envPath, envContent);
+    console.log('已自动生成 JWT_SECRET 并更新到 .env 文件');
+  }
+}
+
+// 初始加载
+loadEnv();
+
+// 监控 .env 文件变化
+const envPath = path.join(__dirname, '../.env');
+if (fs.existsSync(envPath)) {
+  fs.watchFile(envPath, () => {
+    console.log('检测到 .env 文件变化，重新加载环境变量...');
+    loadEnv();
+  });
+}
+
 const express = require('express');
 const cors = require('cors');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const crypto = require('crypto');
-const path = require('path');
 
 const db = require('./database');
 const { sendVerificationCode, sendPasswordResetEmail } = require('./mailer');
@@ -251,7 +311,9 @@ app.post('/api/forgot_password', (req, res) => {
           return res.status(500).json({ error: '生成重置链接失败' });
         }
 
-        const resetUrl = `${process.env.CLIENT_URL || 'http://localhost:5173'}/reset_password?token=${token}`;
+        // 动态获取 CLIENT_URL 参数，如果未配置则使用 http://localhost/
+        const clientUrl = (process.env.CLIENT_URL || 'http://localhost/').replace(/\/$/, '');
+        const resetUrl = `${clientUrl}/reset_password?token=${token}`;
 
         try {
           await sendPasswordResetEmail(email, resetUrl);
