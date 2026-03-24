@@ -24,6 +24,19 @@ XL Chat 是一个现代化的用户认证系统，采用前后端分离架构实
 - npm 或 yarn
 
 ### 安装步骤
+```
+克隆项目（git clone https://github.com/XL1126/xlchat-login-skeleton.git）
+ ↓
+安装第三方库（python setup.py）
+ ↓
+复制变量文件（cp .env.example .env）
+ ↓
+创建脚本（python launcher.py）
+ ↓
+运行脚本（完成！）
+
+如果要开启https协议的话需要另外配置证书文件到client/certs下
+```
 #### 1. 安装依赖
 
 执行下面的py文件快速安装
@@ -60,8 +73,8 @@ cp .env.example .env
 PORT=3000                          # 服务器端口
 NODE_ENV=development               # 环境模式：development（开发）/ production（生产）
 
-# JWT密钥（请修改为随机字符串）
-JWT_SECRET=your-secret-key-here    # 用于加密 Token 的密钥，部署时必须更换
+# JWT密钥
+JWT_SECRET=your-secret-key-here    # 用于加密 Token 的密钥，部署时会自动生成
 
 # 邮件配置
 EMAIL_HOST=smtp.example.com        # SMTP 服务器地址，如 smtp.qq.com、smtp.gmail.com
@@ -69,12 +82,13 @@ EMAIL_PORT=587                     # SMTP 端口，QQ/网易邮箱用 587，SSL 
 EMAIL_USER=your-email@example.com  # 发件人邮箱
 EMAIL_PASS=your-email-password      # 邮箱授权码（非登录密码）
 
-# 前端URL（用于邮件中的链接，⚠️ 重要：部署时必须修改为实际域名）
+# 前端URL（用于邮件中的链接，部署时必须修改为实际域名）
 CLIENT_URL=http://localhost:5173   # 邮件里密码重置链接的域名
-                                  # 支持动态修改，无需重启服务器
                                   # 自动处理末尾斜杠，避免双斜杠问题
                                   # 未配置时默认使用 http://localhost/
 ```
+### `.env` 文件支持动态修改，无需重启服务器
+
 ---
 #### 3. 启动服务
 
@@ -144,9 +158,8 @@ client/certs/
 
 启动后访问以下地址：
 
-- **HTTP 模式**: http://localhost:5173
-- **HTTPS 模式**: https://localhost（需接受证书警告）
-  - 注意：https://localhost 可能无法访问，可以尝试访问 https://127.0.0.1/ 或 https://[设备局域网ip地址]/
+- **[HTTP](http://localhost:5173) 模式**: http://localhost:5173
+- **[HTTPS](https://localhost) 模式**: https://localhost
 - **后端 API**: http://localhost:3000
 
 ## 📁 基本项目结构
@@ -168,7 +181,6 @@ XL-chat/
 │   ├── database.js       # 数据库配置
 │   └── mailer.js        # 邮件发送模块
 ├── database/             # SQLite 数据库文件（项目会自动创建）
-├── images/              # 项目截图
 ├── launcher.py          # 启动脚本生成器
 ├── setup.py             # 快速安装第三方库
 ├── package.json        # 根项目依赖
