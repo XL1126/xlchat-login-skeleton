@@ -7,6 +7,9 @@
 <p align="center">
   <strong>⚠️ 重要提示：当前版本为半成品，仅包含登录注册功能，不包含聊天主功能。</strong>
 </p>
+<p align="center">
+  <strong>数据库使用SQLite：轻量但不支持高并发、分布式部署，仅适合单机小型应用，无法应对用户量增长</strong>
+</p>
 
 ## 📋 项目简介
 
