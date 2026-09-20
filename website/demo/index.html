@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>XL Chat — 登录 UI 演示</title>
+  <meta name="description" content="XL Chat 登录注册界面静态演示（无后端）。" />
+  <link rel="stylesheet" href="../css/login.css" />
+</head>
+<body>
+  <div class="demo-nav">
+    <a class="back" href="../">← 返回介绍页</a>
+    <span class="pill">静态 UI 演示 · 无后端</span>
+  </div>
+
+  <div class="stage">
+    <div class="shell">
+      <div class="shell-title">
+        <h1>XL Chat</h1>
+        <p>登录以进入聊天（演示界面）</p>
+      </div>
+
+      <div class="auth-card">
+        <div class="tabs" role="tablist">
+          <button type="button" data-tab="signin" class="active">登录</button>
+          <button type="button" data-tab="signup">注册</button>
+          <button type="button" data-tab="forgot">忘记密码</button>
+        </div>
+
+        <!-- 登录 -->
+        <form class="panel active" data-panel="signin" data-form="signin" autocomplete="off">
+          <div class="field">
+            <label for="signin-email">邮箱</label>
+            <input id="signin-email" name="email" type="email" placeholder="you@example.com" autocomplete="off" />
+          </div>
+          <div class="field">
+            <label for="signin-password">密码</label>
+            <input id="signin-password" name="password" type="password" placeholder="密码（演示可留空改用验证码）" autocomplete="new-password" />
+          </div>
+          <div class="field">
+            <label for="signin-code">验证码登录（可选）</label>
+            <div class="row-inline">
+              <input id="signin-code" name="code" type="text" inputmode="numeric" maxlength="6" placeholder="6 位验证码" autocomplete="one-time-code" />
+              <button type="button" class="mini" id="send-code-login" data-send-code>获取验证码</button>
+            </div>
+          </div>
+          <div class="meta">
+            <label><input type="checkbox" /> 记住我</label>
+            <a href="#" data-goto="forgot">忘记密码？</a>
+          </div>
+          <button class="submit" type="submit">登录</button>
+        </form>
+
+        <!-- 注册 -->
+        <form class="panel" data-panel="signup" data-form="signup" autocomplete="off">
+          <div class="field">
+            <label for="signup-email">邮箱</label>
+            <input id="signup-email" name="email" type="email" placeholder="you@example.com" autocomplete="off" />
+          </div>
+          <div class="field">
+            <label for="signup-code">邮箱验证码</label>
+            <div class="row-inline">
+              <input id="signup-code" name="code" type="text" inputmode="numeric" maxlength="6" placeholder="6 位验证码" autocomplete="one-time-code" />
+              <button type="button" class="mini" id="send-code-signup" data-send-code>获取验证码</button>
+            </div>
+          </div>
+          <div class="field">
+            <label for="signup-password">设置密码</label>
+            <input id="signup-password" name="password" type="password" placeholder="至少 6 位" autocomplete="new-password" />
+          </div>
+          <div class="meta">
+            <span></span>
+            <a href="#" data-goto="signin">已有账号？去登录</a>
+          </div>
+          <button class="submit" type="submit">注册</button>
+        </form>
+
+        <!-- 忘记密码 -->
+        <form class="panel" data-panel="forgot" data-form="forgot" autocomplete="off">
+          <div class="field">
+            <label for="forgot-email">注册邮箱</label>
+            <input id="forgot-email" name="email" type="email" placeholder="you@example.com" autocomplete="off" />
+          </div>
+          <div class="meta">
+            <span>将发送重置链接（演示仅模拟）</span>
+            <a href="#" data-goto="signin">返回登录</a>
+          </div>
+          <button class="submit" type="submit">发送重置链接</button>
+        </form>
+
+        <div class="msg" id="msg" role="status" aria-live="polite"></div>
+      </div>
+
+      <div class="hint-card">
+        <strong>演示说明：</strong>
+        这是与真实仓库功能对齐的静态 UI 演示，不会请求服务器、不会写入任何数据。
+        完整功能请克隆
+        <a href="https://github.com/XL1126/xlchat-login-skeleton" target="_blank" rel="noopener">xlchat-login-skeleton</a>
+        并配置 <code>.env</code> 后本地运行。
+      </div>
+    </div>
+  </div>
+
+  <div class="demo-foot">
+    UI Demo ·
+    <a href="https://github.com/XL1126/xlchat-login-skeleton" target="_blank" rel="noopener">源码仓库</a>
+  </div>
+
+  <script src="../js/login.js"></script>
+</body>
+</html>

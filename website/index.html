@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>XL Chat — 登录系统介绍</title>
+  <meta name="description" content="XL Chat 现代化用户认证系统介绍：前后端分离，React + Express + SQLite + JWT。" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="./">XL <span>Chat</span></a>
+    <nav>
+      <a href="#about">简介</a>
+      <a href="#features">功能</a>
+      <a href="#stack">技术栈</a>
+      <a href="#api">API</a>
+      <a href="demo/">登录演示</a>
+      <a href="https://github.com/XL1126/xlchat-login-skeleton" target="_blank" rel="noopener">GitHub</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="eyebrow">Auth Skeleton · Half-finished MVP</div>
+    <h1>XL Chat — 登录注册系统</h1>
+    <p class="lead">
+      现代化用户认证系统，前后端分离架构。目前已完成登录、注册、密码重置等核心功能，
+      可作为完整聊天系统的前端入口。聊天主功能尚未实现。
+    </p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="demo/">打开登录 UI 演示</a>
+      <a class="btn btn-ghost" href="https://github.com/XL1126/xlchat-login-skeleton" target="_blank" rel="noopener">克隆仓库</a>
+    </div>
+  </section>
+
+  <div class="notice">
+    <strong style="color:var(--ink)">状态说明：</strong>
+    当前版本为半成品，仅包含登录注册功能；数据库使用 SQLite，适合单机小型应用，
+    不支持高并发与分布式部署。
+  </div>
+
+  <main class="section">
+    <div class="demo-banner">
+      <div>
+        <h3>在线 UI 演示</h3>
+        <p>
+          本页提供静态可交互登录界面：切换登录 / 注册 / 忘记密码，
+          表单校验与倒计时均可体验。<strong style="color:var(--ink)">无后端，不会真正提交数据。</strong>
+        </p>
+      </div>
+      <a class="btn btn-primary" href="demo/">进入演示</a>
+    </div>
+
+    <h2 id="about">项目简介</h2>
+    <div class="grid">
+      <div class="card">
+        <div class="tag">AUTH</div>
+        <h3>认证入口</h3>
+        <p>邮箱验证码注册、密码 / 验证码登录、忘记密码与安全链接重置。</p>
+      </div>
+      <div class="card">
+        <div class="tag">JWT</div>
+        <h3>无状态会话</h3>
+        <p>JWT Token 认证，密钥可通过环境变量配置，部署时可自动生成。</p>
+      </div>
+      <div class="card">
+        <div class="tag">MAIL</div>
+        <h3>邮件通道</h3>
+        <p>Nodemailer + SMTP，用于验证码与密码重置链接发送。</p>
+      </div>
+      <div class="card">
+        <div class="tag">UI</div>
+        <h3>深色界面</h3>
+        <p>React 18 前端，约 270ms 进出场动画，深色主题与防自动填充处理。</p>
+      </div>
+    </div>
+
+    <h2 id="features">现有功能</h2>
+    <div class="chips">
+      <span class="chip">用户注册 · 邮箱验证码</span>
+      <span class="chip">密码登录</span>
+      <span class="chip">验证码登录</span>
+      <span class="chip">忘记密码</span>
+      <span class="chip">密码重置</span>
+      <span class="chip">JWT 认证</span>
+      <span class="chip">邮件发送</span>
+      <span class="chip">SQLite 持久化</span>
+      <span class="chip">丝滑动画</span>
+      <span class="chip">深色主题</span>
+    </div>
+
+    <h2 id="stack">技术栈</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>前端</h3>
+        <p>React 18 · React Router 6 · Vite · CSS3</p>
+      </div>
+      <div class="card">
+        <h3>后端</h3>
+        <p>Express.js · SQLite3 · JWT · bcrypt · Nodemailer</p>
+      </div>
+    </div>
+
+    <h2 id="api">主要 API</h2>
+    <table>
+      <thead>
+        <tr><th>方法</th><th>路径</th><th>说明</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>POST</td><td class="mono">/api/sign_up</td><td>用户注册</td></tr>
+        <tr><td>POST</td><td class="mono">/api/sign_in</td><td>用户登录</td></tr>
+        <tr><td>POST</td><td class="mono">/api/send_verification_code</td><td>发送验证码</td></tr>
+        <tr><td>POST</td><td class="mono">/api/forgot_password</td><td>忘记密码</td></tr>
+        <tr><td>POST</td><td class="mono">/api/reset_password</td><td>重置密码</td></tr>
+        <tr><td>POST</td><td class="mono">/api/logout</td><td>用户登出</td></tr>
+      </tbody>
+    </table>
+
+    <h2>相关项目</h2>
+    <div class="sites">
+      <a href="https://github.com/XL1126/xlchat-login-skeleton" target="_blank" rel="noopener">xlchat-login-skeleton</a>
+      <a href="https://github.com/XL1126/NOUS" target="_blank" rel="noopener">NOUS</a>
+      <a href="https://github.com/XL1126/Simulated-neuron-architecture" target="_blank" rel="noopener">SNA</a>
+    </div>
+  </main>
+
+  <footer>
+    介绍 + 演示页 · 项目仓库
+    <a href="https://github.com/XL1126/xlchat-login-skeleton" target="_blank" rel="noopener">github.com/XL1126/xlchat-login-skeleton</a>
+  </footer>
+</body>
+</html>
