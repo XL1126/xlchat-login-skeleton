@@ -15,14 +15,52 @@
   var STORAGE_USER = 'user';
   var DB_KEY = 'xlchat_demo_server_db';
 
+  /* components/Animated.jsx — 字段与 keyframes / style 1:1 */
   var ANIMATIONS = [
-    { name: 'fadeInUp' },
-    { name: 'fadeInDown' },
-    { name: 'fadeInLeft' },
-    { name: 'fadeInRight' },
-    { name: 'fadeInScale' },
-    { name: 'fadeInRotate' }
+    {
+      name: 'fadeInUp',
+      keyframes:
+        '\n      @keyframes fadeInUp {\n        from {\n          opacity: 0;\n          transform: translateY(30px);\n        }\n        to {\n          opacity: 1;\n          transform: translateY(0);\n        }\n      }\n    ',
+      animation: 'fadeInUp 270ms ease-out forwards'
+    },
+    {
+      name: 'fadeInDown',
+      keyframes:
+        '\n      @keyframes fadeInDown {\n        from {\n          opacity: 0;\n          transform: translateY(-30px);\n        }\n        to {\n          opacity: 1;\n          transform: translateY(0);\n        }\n      }\n    ',
+      animation: 'fadeInDown 270ms ease-out forwards'
+    },
+    {
+      name: 'fadeInLeft',
+      keyframes:
+        '\n      @keyframes fadeInLeft {\n        from {\n          opacity: 0;\n          transform: translateX(-30px);\n        }\n        to {\n          opacity: 1;\n          transform: translateX(0);\n        }\n      }\n    ',
+      animation: 'fadeInLeft 270ms ease-out forwards'
+    },
+    {
+      name: 'fadeInRight',
+      keyframes:
+        '\n      @keyframes fadeInRight {\n        from {\n          opacity: 0;\n          transform: translateX(30px);\n        }\n        to {\n          opacity: 1;\n          transform: translateX(0);\n        }\n      }\n    ',
+      animation: 'fadeInRight 270ms ease-out forwards'
+    },
+    {
+      name: 'fadeInScale',
+      keyframes:
+        '\n      @keyframes fadeInScale {\n        from {\n          opacity: 0;\n          transform: scale(0.9);\n        }\n        to {\n          opacity: 1;\n          transform: scale(1);\n        }\n      }\n    ',
+      animation: 'fadeInScale 270ms ease-out forwards'
+    },
+    {
+      name: 'fadeInRotate',
+      keyframes:
+        '\n      @keyframes fadeInRotate {\n        from {\n          opacity: 0;\n          transform: rotate(-5deg) scale(0.95);\n        }\n        to {\n          opacity: 1;\n          transform: rotate(0deg) scale(1);\n        }\n      }\n    ',
+      animation: 'fadeInRotate 270ms ease-out forwards'
+    }
   ];
+
+  function findAnimation(name) {
+    for (var i = 0; i < ANIMATIONS.length; i++) {
+      if (ANIMATIONS[i].name === name) return ANIMATIONS[i];
+    }
+    return ANIMATIONS[0];
+  }
 
   /* —— AuthContext.jsx —— */
   var auth = {
@@ -311,6 +349,7 @@
   var countdownTimer = null;
   var animSeeds = {};
   var animTimers = [];
+  var injectedStyleNodes = [];
   /* 对照 React：Animated 仅在组件 mount 时播一次；同路由 re-render 不重播 */
   var lastAnimatedRoute = null;
 
@@ -332,7 +371,28 @@
     animTimers = [];
   }
 
-  /* components/Animated.jsx：delay 后可见，再应用 animation-delay=delay */
+  /* Animated.jsx useEffect：把 keyframes 写入 <style>；卸载时移除 */
+  function removeInjectedKeyframes() {
+    injectedStyleNodes.forEach(function (node) {
+      if (node.parentNode) node.parentNode.removeChild(node);
+    });
+    injectedStyleNodes = [];
+  }
+
+  function injectKeyframes(animation) {
+    if (!animation || !animation.keyframes) return;
+    var styleElement = document.createElement('style');
+    styleElement.setAttribute('data-animated-injected', animation.name);
+    styleElement.innerHTML = animation.keyframes;
+    document.head.appendChild(styleElement);
+    injectedStyleNodes.push(styleElement);
+  }
+
+  /**
+   * Animated 组件结构：外层 div，无额外 class 依赖。
+   * isVisible=false → style={{ opacity: 0 }}
+   * isVisible=true  → style={{ opacity: 0, animation: '<name> 270ms ease-out forwards', animationDelay: '<delay>ms' }}
+   */
   function Animated(delay, html, seedKey) {
     var name = pickAnim(seedKey + ':' + delay);
     return (
@@ -343,30 +403,38 @@
   }
 
   /**
-   * playEntrance=true  — 路由首次挂载：按 delay 播放入场动画
-   * playEntrance=false — 同路由状态更新（密码可见性/倒计时/按钮文案）：
-   *   等同 React 中 Animated 已 isVisible=true，直接显示，不重播动画
+   * 1:1 对齐 Animated.jsx 时序：
+   * 1) mount：opacity:0，不挂 animation（对应 !isVisible）
+   * 2) delay ms 后：opacity:0 + animation:'name 270ms ease-out forwards' + animation-delay:delayms
+   *    （对应 isVisible=true，总等待 = delay + animation-delay）
+   * 同路由 re-render：等同 React 保留已挂载状态，不再重播。
    */
   function applyAnimated(root, playEntrance) {
     clearAnimTimers();
+    removeInjectedKeyframes();
+
     var nodes = root.querySelectorAll('.animated-host');
     Array.prototype.forEach.call(nodes, function (node) {
+      var delay = parseInt(node.getAttribute('data-delay') || '0', 10);
+      var animName = node.getAttribute('data-anim') || 'fadeInUp';
+      var anim = findAnimation(animName);
+
       if (!playEntrance) {
-        node.classList.add('is-ready');
-        node.style.opacity = '1';
-        node.style.animation = 'none';
+        /* isVisible 已为 true 且动画早已播完（forwards）→ 直接落在终点，不重启动画 */
+        node.style.cssText = 'opacity:1;transform:none;';
         return;
       }
-      var delay = parseInt(node.getAttribute('data-delay') || '0', 10);
-      var anim = node.getAttribute('data-anim') || 'fadeInUp';
-      node.classList.remove('is-ready');
-      node.style.opacity = '0';
-      node.style.animation = 'none';
+
+      /* 阶段一：!isVisible */
+      node.style.cssText = 'opacity:0;';
+      injectKeyframes(anim);
+
+      /* 阶段二：setTimeout(delay) → setIsVisible(true) 后的 inline style */
       var timer = window.setTimeout(function () {
         if (!node.isConnected) return;
-        node.classList.add('is-ready');
+        /* React 写出的顺序：opacity + animation 简写 + animationDelay */
         node.style.opacity = '0';
-        node.style.animationName = anim;
+        node.style.animation = anim.animation;
         node.style.animationDelay = delay + 'ms';
       }, delay);
       animTimers.push(timer);
