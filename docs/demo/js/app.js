@@ -310,6 +310,9 @@
   var toastTimer = null;
   var countdownTimer = null;
   var animSeeds = {};
+  var animTimers = [];
+  /* 对照 React：Animated 仅在组件 mount 时播一次；同路由 re-render 不重播 */
+  var lastAnimatedRoute = null;
 
   function pickAnim(key) {
     if (!animSeeds[key]) {
@@ -318,14 +321,20 @@
     return animSeeds[key];
   }
 
-  function resetAnimSeeds(routeKey) {
-    // 每次进入路由时，Animated 组件会重新随机动画
+  function resetAnimSeeds() {
     animSeeds = {};
   }
 
-  /* components/Animated.jsx：delay 后挂载，再应用 animationDelay=delay */
+  function clearAnimTimers() {
+    animTimers.forEach(function (t) {
+      clearTimeout(t);
+    });
+    animTimers = [];
+  }
+
+  /* components/Animated.jsx：delay 后可见，再应用 animation-delay=delay */
   function Animated(delay, html, seedKey) {
-    var name = pickAnim(seedKey + ':' + delay + ':' + hashKey(html));
+    var name = pickAnim(seedKey + ':' + delay);
     return (
       '<div class="animated-host" data-delay="' + delay + '" data-anim="' + name + '">' +
       html +
@@ -333,24 +342,34 @@
     );
   }
 
-  function hashKey(s) {
-    var h = 0;
-    for (var i = 0; i < s.length; i++) h = ((h << 5) - h + s.charCodeAt(i)) | 0;
-    return String(h);
-  }
-
-  function applyAnimated(root) {
+  /**
+   * playEntrance=true  — 路由首次挂载：按 delay 播放入场动画
+   * playEntrance=false — 同路由状态更新（密码可见性/倒计时/按钮文案）：
+   *   等同 React 中 Animated 已 isVisible=true，直接显示，不重播动画
+   */
+  function applyAnimated(root, playEntrance) {
+    clearAnimTimers();
     var nodes = root.querySelectorAll('.animated-host');
     Array.prototype.forEach.call(nodes, function (node) {
+      if (!playEntrance) {
+        node.classList.add('is-ready');
+        node.style.opacity = '1';
+        node.style.animation = 'none';
+        return;
+      }
       var delay = parseInt(node.getAttribute('data-delay') || '0', 10);
       var anim = node.getAttribute('data-anim') || 'fadeInUp';
+      node.classList.remove('is-ready');
       node.style.opacity = '0';
-      window.setTimeout(function () {
+      node.style.animation = 'none';
+      var timer = window.setTimeout(function () {
+        if (!node.isConnected) return;
         node.classList.add('is-ready');
         node.style.opacity = '0';
         node.style.animationName = anim;
         node.style.animationDelay = delay + 'ms';
       }, delay);
+      animTimers.push(timer);
     });
   }
 
@@ -645,6 +664,21 @@
     );
   }
 
+  /** 只更新密码框的 type / 眼睛图标 / aria-label（对应 PasswordInput 本地 state） */
+  function togglePasswordFieldDom(field, show) {
+    var input = rootEl.querySelector('input[data-field="' + field + '"]');
+    if (input) {
+      input.type = show ? 'text' : 'password';
+    }
+    var btn = rootEl.querySelector(
+      'button[data-action="toggle-pw"][data-target="' + field + '"]'
+    );
+    if (btn) {
+      btn.setAttribute('aria-label', show ? '隐藏密码' : '显示密码');
+      btn.innerHTML = show ? eyeOffIcon() : eyeIcon();
+    }
+  }
+
   function setDocumentTitle(route) {
     if (route === '/sign_in') document.title = 'XL Chat - 登录';
     else if (route === '/sign_up') document.title = 'XL Chat - 注册';
@@ -678,6 +712,12 @@
       return;
     }
 
+    /* 仅路由切换（组件 mount）时播入场动画；同页 state 更新不重播 */
+    var isRouteMount = lastAnimatedRoute !== route;
+    if (isRouteMount) {
+      resetAnimSeeds();
+    }
+
     var html;
     if (route === '/') html = renderHome();
     else if (route === '/sign_up') html = renderSignUp();
@@ -687,7 +727,8 @@
 
     rootEl.innerHTML = html;
     bindRoot(route);
-    applyAnimated(rootEl);
+    applyAnimated(rootEl, isRouteMount);
+    lastAnimatedRoute = route;
   }
 
   function bindRoot(route) {
@@ -706,13 +747,17 @@
       });
     });
 
+    /**
+     * PasswordInput.jsx：showPassword 为组件本地 state，
+     * 切换时只改 input type 与眼睛图标，不触发父级整页重渲染，更不会重播 Animated。
+     */
     rootEl.querySelectorAll('[data-action="toggle-pw"]').forEach(function (btn) {
       btn.addEventListener('click', function () {
         var t = btn.getAttribute('data-target');
         if (!pageName || !pages[pageName]) return;
         if (t === 'password') pages[pageName].showPassword = !pages[pageName].showPassword;
         if (t === 'confirmPassword') pages[pageName].showConfirm = !pages[pageName].showConfirm;
-        render();
+        togglePasswordFieldDom(t, t === 'password' ? pages[pageName].showPassword : pages[pageName].showConfirm);
       });
     });
 
@@ -720,7 +765,7 @@
       btn.addEventListener('click', function () {
         pages.sign_in.loginType = btn.getAttribute('data-tab');
         clearError('sign_in');
-        resetAnimSeeds();
+        /* 同路由内切换登录方式：React 中 Animated 不会因此重挂载 */
         render();
       });
     });
@@ -962,7 +1007,6 @@
     }
 
     window.addEventListener('hashchange', function () {
-      resetAnimSeeds();
       showToast('');
       // 移动到新路由时重置 error 展示（组件卸载）
       if (pages.reset_password.error && parseRoute() !== '/reset_password') {
