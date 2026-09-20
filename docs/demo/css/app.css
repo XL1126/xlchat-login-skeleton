@@ -1,10 +1,9 @@
-/* XL Chat auth UI — 1:1 from client/src/index.css + client/src/App.css */
+/* client/src/index.css + client/src/App.css + Animated keyframes — copied from repo */
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
-html, body, #app-root {
-  width: 100%;
-  min-height: 100vh;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
@@ -18,10 +17,15 @@ body {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
 }
 
-/* —— App.css —— */
+#root {
+  width: 100%;
+  min-height: 100vh;
+}
+
 .loading-container {
   display: flex;
   justify-content: center;
@@ -112,6 +116,14 @@ code {
   transition: background-color 5000s ease-in-out 0s !important;
 }
 
+.ds-input__input::-webkit-contacts-auto-fill-button,
+.ds-input__input::-webkit-caps-lock-indicator,
+.ds-input__input::-webkit-credentials-auto-fill-button {
+  visibility: hidden;
+  position: absolute;
+  right: 0;
+}
+
 .ds-input__suffix {
   display: flex;
   align-items: center;
@@ -183,6 +195,12 @@ code {
   cursor: pointer;
   padding: 4px;
   z-index: 10;
+}
+
+.code-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
 }
 
 .login-type-tabs {
@@ -356,11 +374,17 @@ code {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-/* Animated.jsx keyframes (270ms ease-out) */
+/* Animated.jsx keyframes — 270ms ease-out */
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(30px); }
   to { opacity: 1; transform: translateY(0); }
@@ -386,34 +410,12 @@ code {
   to { opacity: 1; transform: rotate(0deg) scale(1); }
 }
 
-.animated-slot {
+.animated-host {
   opacity: 0;
-  animation-duration: 270ms;
+}
+
+.animated-host.is-ready {
   animation-timing-function: ease-out;
+  animation-duration: 270ms;
   animation-fill-mode: forwards;
 }
-
-/* demo chrome (not in production app UI body) */
-.demo-chrome {
-  position: fixed;
-  right: 12px;
-  bottom: 12px;
-  z-index: 9998;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  align-items: flex-end;
-}
-
-.demo-chrome a,
-.demo-chrome span {
-  font-size: 12px;
-  color: rgba(248, 250, 255, 0.45);
-  text-decoration: none;
-  background: rgba(26, 26, 31, 0.9);
-  border: 0.8px solid rgba(255, 255, 255, 0.08);
-  border-radius: 999px;
-  padding: 4px 10px;
-}
-
-.demo-chrome a:hover { color: #6780FE; }

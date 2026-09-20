@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>XL Chat — 登录系统介绍</title>
-  <meta name="description" content="XL Chat 现代化用户认证系统：React 18 + Express + SQLite + JWT。本页含与仓库客户端一致的登录 UI 演示入口。" />
+  <meta name="description" content="XL Chat 现代化用户认证系统：React 18 + Express + SQLite + JWT。演示 UI 按 client/src 与 server/index.js 从 0 移植。" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
@@ -30,76 +30,69 @@
       <div class="actions">
         <a class="btn btn-primary" href="demo/">打开登录 UI 演示</a>
         <a class="btn btn-ghost" href="https://github.com/XL1126/xlchat-login-skeleton" target="_blank" rel="noopener">克隆仓库</a>
-        <a class="btn btn-ghost" href="https://xl1126.top" target="_blank" rel="noopener">项目站点</a>
       </div>
     </section>
 
     <div class="callout">
-      <strong>演示说明：</strong>
-      <code>demo/</code> 页面的界面结构、类名、文案与动画时长（270ms）均对照仓库
-      <code>client/src</code> 下真实组件实现（SignIn / SignUp / ForgotPassword / ResetPassword / Home / Logo / PasswordInput / Toast / Animated / App.css），
-      路由也与 <code>App.jsx</code> 一致：<code>/sign_in</code>、<code>/sign_up</code>、<code>/forgot_password</code>、<code>/reset_password</code>。
-      GitHub Pages 上没有 Node 后端，提交会被前端逻辑模拟；本地部署后访问真实前后端时，看到的就是同一套 UI。
+      <strong>演示如何对照真实代码：</strong>
+      本仓库 Pages 上的 <code>demo/</code> 是对照
+      <code>client/src</code>（App / AuthContext / SignIn / SignUp / ForgotPassword / ResetPassword / Home / Logo / PasswordInput / Toast / Animated / App.css / index.css）
+      与 <code>server/index.js</code>（校验与错误文案）从 0 移植的静态实现。
+      样式与 DOM 类名、占位符、按钮文案、路由路径与页面标题一致；无 Node 时 API 落在浏览器 localStorage，
+      错误信息与真实后端对齐（如「用户不存在」「密码错误」「验证码无效或已过期」「请稍等5分钟后再试」）。
+      本地部署前后端后，访问同一套界面。
     </div>
+
+    <h2>仓库截图</h2>
+    <p class="body">下图为 <code>client/public/screenshot.png</code>（真实客户端登录页）。</p>
+    <figure style="margin:0 0 1rem">
+      <img src="screenshot.png" alt="XL Chat 登录页截图" style="width:100%;max-width:960px;border-radius:12px;border:1px solid rgba(255,255,255,0.08)" />
+    </figure>
 
     <h2>现有功能</h2>
     <div class="grid">
       <div class="card">
         <div class="tag">POST /api/sign_up</div>
         <h3>用户注册</h3>
-        <p>用户名 + 邮箱 + 验证码 + 密码确认；前端校验两次密码一致性。</p>
+        <p>用户名 + 邮箱 + 验证码 + 密码确认；服务端校验密码一致、长度 ≥6、验证码有效、邮箱未注册。</p>
       </div>
       <div class="card">
         <div class="tag">POST /api/sign_in</div>
         <h3>登录</h3>
-        <p>密码登录 / 验证码登录两种模式；登录成功写入 JWT 与用户信息。</p>
+        <p><code>login_type</code> 为 password / code；成功返回 JWT 与 user（id / username / email）。</p>
       </div>
       <div class="card">
         <div class="tag">POST /api/send_verification_code</div>
         <h3>邮箱验证码</h3>
-        <p>Nodemailer SMTP 发送；前端 60 秒倒计时，按钮文案「发送验证码 / N秒 / 发送中...」。</p>
+        <p>6 位数字，5 分钟有效；5 分钟内重复请求返回「请稍等5分钟后再试」。</p>
       </div>
       <div class="card">
         <div class="tag">POST /api/forgot_password</div>
         <h3>忘记密码</h3>
-        <p>标题「重置统一登录密码」；成功提示「如果邮箱存在，重置链接已发送」。</p>
+        <p>无论邮箱是否存在均提示「如果邮箱存在，重置链接已发送」；重置 token 15 分钟有效。</p>
       </div>
       <div class="card">
         <div class="tag">POST /api/reset_password</div>
         <h3>密码重置</h3>
-        <p>邮件链接携带 token；设置新密码后 2 秒跳转登录页。</p>
+        <p>链接格式 <code>/reset_password?token=...</code>；成功后前端 2 秒跳转登录页。</p>
       </div>
       <div class="card">
         <div class="tag">UI</div>
         <h3>深色认证界面</h3>
-        <p>纯黑背景、胶囊输入框、#6780FE 主色、XL 字标、顶部 Toast 错误提示、防浏览器自动填充。</p>
+        <p>纯黑背景、#6780FE 主色、XL 字标、胶囊输入框、密码眼睛、顶部 Toast、Animated 270ms 分段入场。</p>
       </div>
     </div>
 
-    <h2>技术栈</h2>
-    <div class="grid">
-      <div class="card">
-        <h3>前端 client/</h3>
-        <p>React 18 · React Router 6 · Vite · React Context（Auth）· CSS3 · 分段进出场动画</p>
-      </div>
-      <div class="card">
-        <h3>后端 server/</h3>
-        <p>Express.js · SQLite3 · JWT · bcrypt · Nodemailer · 可热读 .env</p>
-      </div>
-    </div>
-
-    <h2>项目结构</h2>
+    <h2>演示路由（与 App.jsx 一致）</h2>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>路径</th><th>说明</th></tr></thead>
+        <thead><tr><th>页面</th><th>路由</th><th>标题</th></tr></thead>
         <tbody>
-          <tr><td><code>client/src/pages/</code></td><td>SignIn / SignUp / ForgotPassword / ResetPassword / Home</td></tr>
-          <tr><td><code>client/src/components/</code></td><td>Logo / PasswordInput / Toast / Animated</td></tr>
-          <tr><td><code>client/src/contexts/AuthContext.jsx</code></td><td>登录状态与 token 管理</td></tr>
-          <tr><td><code>server/index.js</code></td><td>API 入口</td></tr>
-          <tr><td><code>server/database.js</code></td><td>SQLite 配置</td></tr>
-          <tr><td><code>server/mailer.js</code></td><td>邮件发送</td></tr>
-          <tr><td><code>launcher.py</code> / <code>setup.py</code></td><td>启动脚本生成器 / 依赖安装</td></tr>
+          <tr><td>登录</td><td><code>#/sign_in</code></td><td>XL Chat - 登录</td></tr>
+          <tr><td>注册</td><td><code>#/sign_up</code></td><td>XL Chat - 注册</td></tr>
+          <tr><td>忘记密码</td><td><code>#/forgot_password</code></td><td>XL Chat - 重置密码</td></tr>
+          <tr><td>重置密码</td><td><code>#/reset_password?token=...</code></td><td>XL Chat - 重置密码</td></tr>
+          <tr><td>登录成功</td><td><code>#/</code></td><td>XL Chat</td></tr>
         </tbody>
       </table>
     </div>
@@ -109,27 +102,24 @@
 <pre>
 克隆项目
  ↓
-python setup.py                 # 安装第三方库
+python setup.py
  ↓
-cp .env.example .env            # 配置 JWT / SMTP / CLIENT_URL
+cp .env.example .env
  ↓
-python launcher.py --bat        # 生成启动脚本（或 npm run dev）
+python launcher.py --bat   # 或 npm run dev
  ↓
 HTTP:  http://localhost:5173
 API:   http://localhost:3000
-HTTPS: 需在 client/certs 放置 fullchain.pem + privatekey.pem
       </pre>
     </div>
 
     <h2>继续</h2>
     <div class="sites">
-      <a href="demo/">登录 UI 演示（对照真实代码）</a>
+      <a href="demo/">登录 UI 演示</a>
       <a href="https://github.com/XL1126/xlchat-login-skeleton" target="_blank" rel="noopener">源码仓库</a>
-      <a href="https://github.com/XL1126/xlchat-login-skeleton/blob/main/README.md" target="_blank" rel="noopener">README.md</a>
       <a href="https://github.com/XL1126/xlchat-login-skeleton/blob/main/client/src/pages/SignIn.jsx" target="_blank" rel="noopener">SignIn.jsx</a>
       <a href="https://github.com/XL1126/xlchat-login-skeleton/blob/main/client/src/App.css" target="_blank" rel="noopener">App.css</a>
-      <a href="https://github.com/XL1126/NOUS" target="_blank" rel="noopener">NOUS</a>
-      <a href="https://github.com/XL1126/Simulated-neuron-architecture" target="_blank" rel="noopener">SNA</a>
+      <a href="https://github.com/XL1126/xlchat-login-skeleton/blob/main/server/index.js" target="_blank" rel="noopener">server/index.js</a>
     </div>
   </div>
 
