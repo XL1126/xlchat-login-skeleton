@@ -2,9 +2,9 @@
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/x-icon" href="../favicon.ico" />
-    <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico" />
-    <link rel="bookmark" type="image/x-icon" href="../favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="../assets/favicon.ico" />
+    <link rel="shortcut icon" type="image/x-icon" href="../assets/favicon.ico" />
+    <link rel="bookmark" type="image/x-icon" href="../assets/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="XL Chat" />
     <title>XL Chat</title>
@@ -13,6 +13,20 @@
   <body>
     <div id="toast-root"></div>
     <div id="root"></div>
-    <script src="js/app.js"></script>
+    <!-- 加载顺序对齐 main.jsx 依赖图 -->
+    <script src="js/Toast.js"></script>
+    <script src="js/Animated.js"></script>
+    <script src="js/Logo.js"></script>
+    <script src="js/PasswordInput.js"></script>
+    <script src="js/AuthContext.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/fields.js"></script>
+    <script src="js/pages/SignIn.js"></script>
+    <script src="js/pages/SignUp.js"></script>
+    <script src="js/pages/ForgotPassword.js"></script>
+    <script src="js/pages/ResetPassword.js"></script>
+    <script src="js/pages/Home.js"></script>
+    <script src="js/App.js"></script>
+    <script src="js/main.js"></script>
   </body>
 </html>

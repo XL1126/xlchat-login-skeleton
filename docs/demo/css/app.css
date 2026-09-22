@@ -1,4 +1,5 @@
-/* client/src/index.css + client/src/App.css + Animated keyframes — copied from repo */
+/* client/src/index.css + client/src/App.css
+ * 1:1 复刻；Animated 的 @keyframes 由 js/Animated.js 动态注入（同 Animated.jsx） */
 
 * {
   margin: 0;
@@ -17,8 +18,7 @@ body {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
 #root {
@@ -384,14 +384,7 @@ code {
   }
 }
 
-/*
- * Animated.jsx 的 keyframes 不在 App.css 里，而是在组件 mount 时
- * document.createElement('style') 动态注入。这里只保留 !isVisible 时的
- * 初始 inline 语义（opacity:0），具体 animation 一律由 app.js 内联写出：
- *   opacity: 0;
- *   animation: <fadeIn* > 270ms ease-out forwards;
- *   animation-delay: <delay>ms;
- */
+/* Animated.jsx: isVisible=false 时仅有 opacity:0；入场样式由内联注入 */
 .animated-host {
   opacity: 0;
 }
