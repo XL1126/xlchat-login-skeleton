@@ -1,4 +1,4 @@
-* pages/ForgotPassword.jsx */
+/* pages/ForgotPassword.jsx */
 (function (global) {
   'use strict';
 

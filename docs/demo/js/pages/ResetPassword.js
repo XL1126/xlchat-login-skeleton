@@ -1,4 +1,4 @@
-* pages/ResetPassword.jsx — useSearchParams().get('token') */
+/* pages/ResetPassword.jsx — useSearchParams().get('token') */
 (function (global) {
   'use strict';
 

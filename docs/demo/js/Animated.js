@@ -1,4 +1,4 @@
-* Animated.jsx — 1:1
+/* Animated.jsx — 1:1
  * mount: useState 随机动画 + isVisible=false → style opacity:0
  * useEffect: 注入 @keyframes 到 <style>
  * delay ms 后 isVisible=true → style: opacity:0; animation:'name 270ms ease-out forwards'; animation-delay:delay

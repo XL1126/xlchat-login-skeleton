@@ -1,4 +1,4 @@
-* AuthContext.jsx — localStorage: token / user */
+/* AuthContext.jsx — localStorage: token / user */
 (function (global) {
   'use strict';
 

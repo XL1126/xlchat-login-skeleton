@@ -1,4 +1,4 @@
-* PasswordInput.jsx — 本地 showPassword state；切换只改 type / 图标 / aria-label */
+/* PasswordInput.jsx — 本地 showPassword state；切换只改 type / 图标 / aria-label */
 (function (global) {
   'use strict';
 

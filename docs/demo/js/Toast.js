@@ -1,4 +1,4 @@
-* Toast.jsx — message 非空时展示，3 秒后 onClose；error 样式 + 琥珀色图标 */
+/* Toast.jsx — message 非空时展示，3 秒后 onClose；error 样式 + 琥珀色图标 */
 (function (global) {
   'use strict';
 

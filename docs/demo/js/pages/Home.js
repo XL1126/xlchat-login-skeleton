@@ -1,4 +1,4 @@
-* pages/Home.jsx */
+/* pages/Home.jsx */
 (function (global) {
   'use strict';
 

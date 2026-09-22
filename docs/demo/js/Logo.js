@@ -1,4 +1,4 @@
-* Logo.jsx — 1:1 SVG 字标 */
+/* Logo.jsx — 1:1 SVG 字标 */
 (function (global) {
   'use strict';
 

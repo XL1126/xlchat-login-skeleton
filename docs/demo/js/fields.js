@@ -1,4 +1,4 @@
-* UI 片段：对照各页 JSX 中的 ds-input 结构 */
+/* UI 片段：对照各页 JSX 中的 ds-input 结构 */
 (function (global) {
   'use strict';
 
