@@ -1,270 +1,283 @@
-# XL Chat - 登录系统
+﻿# XL Chat - 鐧诲綍绯荤粺
 
 <p align="center">
-  <img src="./client/public/screenshot.png" alt="XL Chat 截图" width="600">
+  <img src="./client/public/screenshot.png" alt="XL Chat 鎴浘" width="600">
 </p>
 
 <p align="center">
-  <strong>⚠️ 重要提示：当前版本为半成品，仅包含登录注册功能，不包含聊天主功能。</strong>
+  <strong>鈿狅笍 閲嶈鎻愮ず锛氬綋鍓嶇増鏈负鍗婃垚鍝侊紝浠呭寘鍚櫥褰曟敞鍐屽姛鑳斤紝涓嶅寘鍚亰澶╀富鍔熻兘銆?/strong>
 </p>
 <p align="center">
-  <strong>数据库使用SQLite：轻量但不支持高并发、分布式部署，仅适合单机小型应用，无法应对用户量增长</strong>
+  <strong>鏁版嵁搴撲娇鐢⊿QLite锛氳交閲忎絾涓嶆敮鎸侀珮骞跺彂銆佸垎甯冨紡閮ㄧ讲锛屼粎閫傚悎鍗曟満灏忓瀷搴旂敤锛屾棤娉曞簲瀵圭敤鎴烽噺澧為暱</strong>
 </p>
 
-## 📋 项目简介
+## 馃搵 椤圭洰绠€浠?
 
-XL Chat 是一个现代化的用户认证系统，采用前后端分离架构实现。目前已完成登录、注册、密码重置等核心功能，可作为完整聊天系统的前端入口。
+XL Chat 鏄竴涓幇浠ｅ寲鐨勭敤鎴疯璇佺郴缁燂紝閲囩敤鍓嶅悗绔垎绂绘灦鏋勫疄鐜般€傜洰鍓嶅凡瀹屾垚鐧诲綍銆佹敞鍐屻€佸瘑鐮侀噸缃瓑鏍稿績鍔熻兘锛屽彲浣滀负瀹屾暣鑱婂ぉ绯荤粺鐨勫墠绔叆鍙ｃ€?
 
-**当前版本状态**：✅ 已完成 - 用户认证系统（半成品）<br>
-**计划功能**：❌ 未完成 - AI 聊天主功能
+**褰撳墠鐗堟湰鐘舵€?*锛氣渽 宸插畬鎴?- 鐢ㄦ埛璁よ瘉绯荤粺锛堝崐鎴愬搧锛?br>
+**璁″垝鍔熻兘**锛氣潓 鏈畬鎴?- AI 鑱婂ぉ涓诲姛鑳?
 
-## 🚀 快速开始
+## 馃殌 蹇€熷紑濮?
 
-### 环境要求
+### 鐜瑕佹眰
 
 - Node.js 16+
-- Python 3.6+（用于启动脚本）
-- npm 或 yarn
+- Python 3.6+锛堢敤浜庡惎鍔ㄨ剼鏈級
+- npm 鎴?yarn
 
-### 安装步骤
+### 瀹夎姝ラ
 ```
-克隆项目（git clone https://github.com/XL1126/xlchat-login-skeleton.git）
- ↓
-安装第三方库（python setup.py）
- ↓
-复制变量文件（cp .env.example .env）
- ↓
-创建脚本（python launcher.py）
- ↓
-运行脚本（完成！）
+鍏嬮殕椤圭洰锛坓it clone https://github.com/XL1126/xlchat-login-skeleton.git锛?
+ 鈫?
+瀹夎绗笁鏂瑰簱锛坧ython setup.py锛?
+ 鈫?
+澶嶅埗鍙橀噺鏂囦欢锛坈p .env.example .env锛?
+ 鈫?
+鍒涘缓鑴氭湰锛坧ython launcher.py锛?
+ 鈫?
+杩愯鑴氭湰锛堝畬鎴愶紒锛?
 
-如果要开启https协议的话需要另外配置证书文件到client/certs下
+濡傛灉瑕佸紑鍚痟ttps鍗忚鐨勮瘽闇€瑕佸彟澶栭厤缃瘉涔︽枃浠跺埌client/certs涓?
 ```
-#### 1. 安装依赖
+#### 1. 瀹夎渚濊禆
 
-执行下面的py文件快速安装
+鎵ц涓嬮潰鐨刾y鏂囦欢蹇€熷畨瑁?
 
 ```bash
-# 执行一键安装脚本
+# 鎵ц涓€閿畨瑁呰剼鏈?
 python setup.py
 ```
-或手动安装
+鎴栨墜鍔ㄥ畨瑁?
 ```bash
-# 安装根项目依赖
+# 瀹夎鏍归」鐩緷璧?
 npm install
 
-# 安装前端依赖
+# 瀹夎鍓嶇渚濊禆
 cd client
 npm install
 cd ..
 ```
 ---
-#### 2. 配置环境变量
+#### 2. 閰嶇疆鐜鍙橀噺
 
-复制 `.env.example` 为 `.env`，并根据实际情况修改：
+澶嶅埗 `.env.example` 涓?`.env`锛屽苟鏍规嵁瀹為檯鎯呭喌淇敼锛?
 
 ```bash
 cp .env.example .env
 ```
 
-> ⚠️ **重要提示**：`.env` 文件包含敏感信息（邮箱密码、JWT密钥等），**请保管好文件**。
+> 鈿狅笍 **閲嶈鎻愮ず**锛歚.env` 鏂囦欢鍖呭惈鏁忔劅淇℃伅锛堥偖绠卞瘑鐮併€丣WT瀵嗛挜绛夛級锛?*璇蜂繚绠″ソ鏂囦欢**銆?
 
-编辑 `.env` 文件，配置以下变量：
+缂栬緫 `.env` 鏂囦欢锛岄厤缃互涓嬪彉閲忥細
 
 ```env
-# 服务器配置
-PORT=3000                          # 服务器端口
-NODE_ENV=development               # 环境模式：development（开发）/ production（生产）
+# 鏈嶅姟鍣ㄩ厤缃?
+PORT=3000                          # 鏈嶅姟鍣ㄧ鍙?
+NODE_ENV=development               # 鐜妯″紡锛歞evelopment锛堝紑鍙戯級/ production锛堢敓浜э級
 
-# JWT密钥
-JWT_SECRET=your-secret-key-here    # 用于加密 Token 的密钥，部署时会自动生成
+# JWT瀵嗛挜
+JWT_SECRET=your-secret-key-here    # 鐢ㄤ簬鍔犲瘑 Token 鐨勫瘑閽ワ紝閮ㄧ讲鏃朵細鑷姩鐢熸垚
 
-# 邮件配置
-EMAIL_HOST=smtp.example.com        # SMTP 服务器地址，如 smtp.qq.com、smtp.gmail.com
-EMAIL_PORT=587                     # SMTP 端口，QQ/网易邮箱用 587，SSL 用 465
-EMAIL_USER=your-email@example.com  # 发件人邮箱
-EMAIL_PASS=your-email-password      # 邮箱授权码（非登录密码）
+# 閭欢閰嶇疆
+EMAIL_HOST=smtp.example.com        # SMTP 鏈嶅姟鍣ㄥ湴鍧€锛屽 smtp.qq.com銆乻mtp.gmail.com
+EMAIL_PORT=587                     # SMTP 绔彛锛孮Q/缃戞槗閭鐢?587锛孲SL 鐢?465
+EMAIL_USER=your-email@example.com  # 鍙戜欢浜洪偖绠?
+EMAIL_PASS=your-email-password      # 閭鎺堟潈鐮侊紙闈炵櫥褰曞瘑鐮侊級
 
-# 前端URL（用于邮件中的链接，部署时必须修改为实际域名）
-CLIENT_URL=http://localhost:5173   # 邮件里密码重置链接的域名
-                                  # 自动处理末尾斜杠，避免双斜杠问题
-                                  # 未配置时默认使用 http://localhost/
+# 鍓嶇URL锛堢敤浜庨偖浠朵腑鐨勯摼鎺ワ紝閮ㄧ讲鏃跺繀椤讳慨鏀逛负瀹為檯鍩熷悕锛?
+CLIENT_URL=http://localhost:5173   # 閭欢閲屽瘑鐮侀噸缃摼鎺ョ殑鍩熷悕
+                                  # 鑷姩澶勭悊鏈熬鏂滄潬锛岄伩鍏嶅弻鏂滄潬闂
+                                  # 鏈厤缃椂榛樿浣跨敤 http://localhost/
 ```
-### `.env` 文件支持动态修改，无需重启服务器
+### `.env` 鏂囦欢鏀寔鍔ㄦ€佷慨鏀癸紝鏃犻渶閲嶅惎鏈嶅姟鍣?
 
 ---
-#### 3. 启动服务
+#### 3. 鍚姩鏈嶅姟
 
-**方式一：使用启动脚本（推荐）**
+**鏂瑰紡涓€锛氫娇鐢ㄥ惎鍔ㄨ剼鏈紙鎺ㄨ崘锛?*
 
-根目录下的launcher.py文件本身是 **生成启动脚本** 的，并不是启动脚本
+鏍圭洰褰曚笅鐨刲auncher.py鏂囦欢鏈韩鏄?**鐢熸垚鍚姩鑴氭湰** 鐨勶紝骞朵笉鏄惎鍔ㄨ剼鏈?
 
 ```bash
-# 查看帮助
+# 鏌ョ湅甯姪
 python launcher.py
 
-# 生成选择性启动脚本（Windows）
+# 鐢熸垚閫夋嫨鎬у惎鍔ㄨ剼鏈紙Windows锛?
 python launcher.py --bat
 
-# 生成快速启动脚本（Windows HTTPS）
+# 鐢熸垚蹇€熷惎鍔ㄨ剼鏈紙Windows HTTPS锛?
 python launcher.py --bat --https
 
-# 生成选择性启动脚本（Linux/Mac）
+# 鐢熸垚閫夋嫨鎬у惎鍔ㄨ剼鏈紙Linux/Mac锛?
 python launcher.py --sh
 
-# 生成快速启动脚本（Linux/Mac HTTPS）
+# 鐢熸垚蹇€熷惎鍔ㄨ剼鏈紙Linux/Mac HTTPS锛?
 python launcher.py --sh --https
 ```
 
-**方式二：手动启动**
+**鏂瑰紡浜岋細鎵嬪姩鍚姩**
 
 ```bash
-# 开发模式（同时运行前后端，HTTP）
+# 寮€鍙戞ā寮忥紙鍚屾椂杩愯鍓嶅悗绔紝HTTP锛?
 npm run dev
 
-# 开发模式（HTTPS）
+# 寮€鍙戞ā寮忥紙HTTPS锛?
 npm run dev:https
 
-# 仅运行后端
+# 浠呰繍琛屽悗绔?
 npm run server:dev
 
-# 仅运行前端
+# 浠呰繍琛屽墠绔?
 npm run client:dev
 ```
-手动启动还可以更复杂一点
+鎵嬪姩鍚姩杩樺彲浠ユ洿澶嶆潅涓€鐐?
 ```bash
-# 开启后端服务
+# 寮€鍚悗绔湇鍔?
 node server/index.js
 
-# 开启前端服务
+# 寮€鍚墠绔湇鍔?
 cd client
 npm run dev
 ```
 ---
-### 4. 配置 SSL 证书（如需使用 HTTPS）
+### 4. 閰嶇疆 SSL 璇佷功锛堝闇€浣跨敤 HTTPS锛?
 
-如果你需要使用 HTTPS 模式，需要准备 SSL 证书并放置到 `client/certs/` 目录下：
+濡傛灉浣犻渶瑕佷娇鐢?HTTPS 妯″紡锛岄渶瑕佸噯澶?SSL 璇佷功骞舵斁缃埌 `client/certs/` 鐩綍涓嬶細
 
 ```
 client/certs/
-├── fullchain.pem     # 证书链文件（必填）
-└── privatekey.pem   # 私钥文件（必填）
+鈹溾攢鈹€ fullchain.pem     # 璇佷功閾炬枃浠讹紙蹇呭～锛?
+鈹斺攢鈹€ privatekey.pem   # 绉侀挜鏂囦欢锛堝繀濉級
 ```
 
-> ⚠️ **注意**：证书文件名必须使用 `fullchain.pem` 和 `privatekey.pem`这；两个名称，配置文件中指定了使用在这个两个名称。
+> 鈿狅笍 **娉ㄦ剰**锛氳瘉涔︽枃浠跺悕蹇呴』浣跨敤 `fullchain.pem` 鍜?`privatekey.pem`杩欙紱涓や釜鍚嶇О锛岄厤缃枃浠朵腑鎸囧畾浜嗕娇鐢ㄥ湪杩欎釜涓や釜鍚嶇О銆?
 
-证书准备方法：
-可以前往 [这个](https://github.com/XL1126/xlchat-login-skeleton/tree/main/client/certs) 目录查看如何配置证书
+璇佷功鍑嗗鏂规硶锛?
+鍙互鍓嶅線 [杩欎釜](https://github.com/XL1126/xlchat-login-skeleton/tree/main/client/certs) 鐩綍鏌ョ湅濡備綍閰嶇疆璇佷功
 
 ---
-### 5. 访问应用
+### 5. 璁块棶搴旂敤
 
-启动后访问以下地址：
+鍚姩鍚庤闂互涓嬪湴鍧€锛?
 
-- **[HTTP](http://localhost:5173) 模式**: http://localhost:5173
-- **[HTTPS](https://localhost) 模式**: https://localhost
-- **后端 API**: http://localhost:3000
+- **[HTTP](http://localhost:5173) 妯″紡**: http://localhost:5173
+- **[HTTPS](https://localhost) 妯″紡**: https://localhost
+- **鍚庣 API**: http://localhost:3000
 
-## 📁 基本项目结构
+## 馃搧 鍩烘湰椤圭洰缁撴瀯
 
 ```
 XL-chat/
-├── client/                 # 前端代码 (React 18 + Vite)
-│   ├── certs/               # SSL 证书（HTTPS 使用）
-│   ├── src/
-│   │   ├── components/      # React 组件
-│   │   ├── contexts/       # React Context
-│   │   ├── pages/         # 页面组件
-│   │   ├── App.jsx        # 路由配置
-│   │   └── App.css        # 全局样式
-│   ├── public/            # 静态资源
-│   └── vite.config.js     # Vite 配置
-├── server/                # 后端代码 (Express + SQLite)
-│   ├── index.js          # 服务器入口
-│   ├── database.js       # 数据库配置
-│   └── mailer.js        # 邮件发送模块
-├── database/             # SQLite 数据库文件（项目会自动创建）
-├── launcher.py          # 启动脚本生成器
-├── setup.py             # 快速安装第三方库
-├── package.json        # 根项目依赖
-├── .env                # 环境变量（需手动创建）
-├── .env.example        # 环境变量示例
-└── README.md           # 项目说明
+鈹溾攢鈹€ client/                 # 鍓嶇浠ｇ爜 (React 18 + Vite)
+鈹?  鈹溾攢鈹€ certs/               # SSL 璇佷功锛圚TTPS 浣跨敤锛?
+鈹?  鈹溾攢鈹€ src/
+鈹?  鈹?  鈹溾攢鈹€ components/      # React 缁勪欢
+鈹?  鈹?  鈹溾攢鈹€ contexts/       # React Context
+鈹?  鈹?  鈹溾攢鈹€ pages/         # 椤甸潰缁勪欢
+鈹?  鈹?  鈹溾攢鈹€ App.jsx        # 璺敱閰嶇疆
+鈹?  鈹?  鈹斺攢鈹€ App.css        # 鍏ㄥ眬鏍峰紡
+鈹?  鈹溾攢鈹€ public/            # 闈欐€佽祫婧?
+鈹?  鈹斺攢鈹€ vite.config.js     # Vite 閰嶇疆
+鈹溾攢鈹€ server/                # 鍚庣浠ｇ爜 (Express + SQLite)
+鈹?  鈹溾攢鈹€ index.js          # 鏈嶅姟鍣ㄥ叆鍙?
+鈹?  鈹溾攢鈹€ database.js       # 鏁版嵁搴撻厤缃?
+鈹?  鈹斺攢鈹€ mailer.js        # 閭欢鍙戦€佹ā鍧?
+鈹溾攢鈹€ database/             # SQLite 鏁版嵁搴撴枃浠讹紙椤圭洰浼氳嚜鍔ㄥ垱寤猴級
+鈹溾攢鈹€ launcher.py          # 鍚姩鑴氭湰鐢熸垚鍣?
+鈹溾攢鈹€ setup.py             # 蹇€熷畨瑁呯涓夋柟搴?
+鈹溾攢鈹€ package.json        # 鏍归」鐩緷璧?
+鈹溾攢鈹€ .env                # 鐜鍙橀噺锛堥渶鎵嬪姩鍒涘缓锛?
+鈹溾攢鈹€ .env.example        # 鐜鍙橀噺绀轰緥
+鈹斺攢鈹€ README.md           # 椤圭洰璇存槑
 ```
 
-## ✨ 现有功能
+## 鉁?鐜版湁鍔熻兘
 
-- [x] **用户注册** - 邮箱验证码注册
-- [x] **用户登录** - 密码登录 / 验证码登录
-- [x] **忘记密码** - 邮箱验证重置密码
-- [x] **密码重置** - 安全链接重置
-- [x] **JWT 认证** - 无状态身份验证
-- [x] **邮件发送** - Nodemailer 邮件服务
-- [x] **数据持久化** - SQLite 数据库
-- [x] **丝滑动画** - 270ms 进出场动画
-- [x] **深色主题** - 现代 UI 设计
-- [x] **防自动填充** - 防止浏览器自动填充
+- [x] **鐢ㄦ埛娉ㄥ唽** - 閭楠岃瘉鐮佹敞鍐?
+- [x] **鐢ㄦ埛鐧诲綍** - 瀵嗙爜鐧诲綍 / 楠岃瘉鐮佺櫥褰?
+- [x] **蹇樿瀵嗙爜** - 閭楠岃瘉閲嶇疆瀵嗙爜
+- [x] **瀵嗙爜閲嶇疆** - 瀹夊叏閾炬帴閲嶇疆
+- [x] **JWT 璁よ瘉** - 鏃犵姸鎬佽韩浠介獙璇?
+- [x] **閭欢鍙戦€?* - Nodemailer 閭欢鏈嶅姟
+- [x] **鏁版嵁鎸佷箙鍖?* - SQLite 鏁版嵁搴?
+- [x] **涓濇粦鍔ㄧ敾** - 270ms 杩涘嚭鍦哄姩鐢?
+- [x] **娣辫壊涓婚** - 鐜颁唬 UI 璁捐
+- [x] **闃茶嚜鍔ㄥ～鍏?* - 闃叉娴忚鍣ㄨ嚜鍔ㄥ～鍏?
 
-## 🛠️ 技术栈
+## 馃洜锔?鎶€鏈爤
 
-### 后端
+### 鍚庣
 
-- **Express.js** - Web 框架
-- **SQLite3** - 轻量级数据库
-- **JWT** - JSON Web Token 认证
-- **bcrypt** - 密码加密
-- **Nodemailer** - 邮件发送
+- **Express.js** - Web 妗嗘灦
+- **SQLite3** - 杞婚噺绾ф暟鎹簱
+- **JWT** - JSON Web Token 璁よ瘉
+- **bcrypt** - 瀵嗙爜鍔犲瘑
+- **Nodemailer** - 閭欢鍙戦€?
 
-### 前端
+### 鍓嶇
 
-- **React 18** - UI 框架
-- **React Router 6** - 路由管理
-- **Vite** - 构建工具
-- **CSS3** - 样式设计
+- **React 18** - UI 妗嗘灦
+- **React Router 6** - 璺敱绠＄悊
+- **Vite** - 鏋勫缓宸ュ叿
+- **CSS3** - 鏍峰紡璁捐
 
-## 🔧 API 接口
+## 馃敡 API 鎺ュ彛
 
-| 方法 | 路径 | 描述 |
+| 鏂规硶 | 璺緞 | 鎻忚堪 |
 |------|------|------|
-| POST | `/api/sign_up` | 用户注册 |
-| POST | `/api/sign_in` | 用户登录 |
-| POST | `/api/send_verification_code` | 发送验证码 |
-| POST | `/api/forgot_password` | 忘记密码 |
-| POST | `/api/reset_password` | 重置密码 |
-| POST | `/api/logout` | 用户登出 |
+| POST | `/api/sign_up` | 鐢ㄦ埛娉ㄥ唽 |
+| POST | `/api/sign_in` | 鐢ㄦ埛鐧诲綍 |
+| POST | `/api/send_verification_code` | 鍙戦€侀獙璇佺爜 |
+| POST | `/api/forgot_password` | 蹇樿瀵嗙爜 |
+| POST | `/api/reset_password` | 閲嶇疆瀵嗙爜 |
+| POST | `/api/logout` | 鐢ㄦ埛鐧诲嚭 |
 
-## 🔐 安全说明
+## 馃攼 瀹夊叏璇存槑
 
-1. **密码加密**：使用 bcrypt 进行密码哈希
-2. **Token 认证**：JWT 无状态认证
-3. **验证码**：一次性验证码，5分钟有效期
-4. **邮件链接**：重置链接有时效性
+1. **瀵嗙爜鍔犲瘑**锛氫娇鐢?bcrypt 杩涜瀵嗙爜鍝堝笇
+2. **Token 璁よ瘉**锛欽WT 鏃犵姸鎬佽璇?
+3. **楠岃瘉鐮?*锛氫竴娆℃€ч獙璇佺爜锛?鍒嗛挓鏈夋晥鏈?
+4. **閭欢閾炬帴**锛氶噸缃摼鎺ユ湁鏃舵晥鎬?
 
-## ⚙️ 服务器部署指南
+## 鈿欙笍 鏈嶅姟鍣ㄩ儴缃叉寚鍗?
 
-1. 安装 Node.js 和 Python
-2. 克隆项目到服务器
-3. 安装依赖
-4. 配置 `.env` 文件
-5. 使用 PM2 或类似工具管理进程
-6. 配置 Nginx 反向代理（可选）
-7. 配置 SSL 证书（生产环境推荐使用 HTTPS）
+1. 瀹夎 Node.js 鍜?Python
+2. 鍏嬮殕椤圭洰鍒版湇鍔″櫒
+3. 瀹夎渚濊禆
+4. 閰嶇疆 `.env` 鏂囦欢
+5. 浣跨敤 PM2 鎴栫被浼煎伐鍏风鐞嗚繘绋?
+6. 閰嶇疆 Nginx 鍙嶅悜浠ｇ悊锛堝彲閫夛級
+7. 閰嶇疆 SSL 璇佷功锛堢敓浜х幆澧冩帹鑽愪娇鐢?HTTPS锛?
 
-### 开发人员
+### 寮€鍙戜汉鍛?
 
-- **XL1126** - 项目创始人 [@XL1126](https://github.com/XL1126)
-- **Trae AI** - 大部分代码由 Trae AI 生成
+- **XL1126** - 椤圭洰鍒涘浜?[@XL1126](https://github.com/XL1126)
+- **Trae AI** - 澶ч儴鍒嗕唬鐮佺敱 Trae AI 鐢熸垚
 
-### 联系方式
+### 鑱旂郴鏂瑰紡
 
-- 邮箱：xiaoli201126@qq.com
+- 閭锛歺iaoli201126@qq.com
 
-## 📄 许可证
+## 馃搫 璁稿彲璇?
 
-本项目采用 **MIT 许可证** 进行开源。
+鏈」鐩噰鐢?**MIT 璁稿彲璇?* 杩涜寮€婧愩€?
 
-## ⚠️ 其他声明
+## 鈿狅笍 鍏朵粬澹版槑
 
-当前版本为**半成品**，仅实现了用户登录注册功能。XL Chat 的核心聊天功能需要开发者自行根据需求进行后续开发。本项目仅提供认证系统的基础框架，使用者需自行承担开发完整功能的责任。
+褰撳墠鐗堟湰涓?*鍗婃垚鍝?*锛屼粎瀹炵幇浜嗙敤鎴风櫥褰曟敞鍐屽姛鑳姐€俋L Chat 鐨勬牳蹇冭亰澶╁姛鑳介渶瑕佸紑鍙戣€呰嚜琛屾牴鎹渶姹傝繘琛屽悗缁紑鍙戙€傛湰椤圭洰浠呮彁渚涜璇佺郴缁熺殑鍩虹妗嗘灦锛屼娇鐢ㄨ€呴渶鑷鎵挎媴寮€鍙戝畬鏁村姛鑳界殑璐ｄ换銆?
 
 ---
+
+
+---
+
+## GitHub Pages（介绍站 + 登录 UI 演示）
+
+仓库 `docs/` 目录已启用 GitHub Pages（Settings → Pages · Deploy from branch · `/docs`）：
+
+- 介绍站：https://xl1126.github.io/xlchat-login-skeleton/
+- 登录 UI 演示：https://xl1126.github.io/xlchat-login-skeleton/demo/
+
+演示端按 `client/src` 模块 1:1 移植（Animated / Logo / PasswordInput / Toast / AuthContext / pages / App），
+样式与 `App.css` 一致，API 文案对照 `server/index.js`。无 Node 时接口由浏览器 localStorage 模拟。
