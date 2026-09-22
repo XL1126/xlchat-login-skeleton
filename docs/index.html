@@ -1,106 +1,117 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>XL Chat 鈥?鐧诲綍绯荤粺浠嬬粛</title>
-  <meta name="description" content="XL Chat 鐜颁唬鍖栫敤鎴疯璇佺郴缁燂細React 18 + Express + SQLite + JWT銆傛紨绀?UI 涓庡姩鐢诲鐓?client/src 1:1 绉绘銆? />
+  <title>XL Chat — 登录系统介绍</title>
+  <meta name="description" content="XL Chat 现代化用户认证系统：React 18 + Express + SQLite + JWT。演示 UI 与动画对照 client/src 1:1 移植。" />
   <link rel="stylesheet" href="css/site.css" />
 </head>
 <body>
   <header class="topbar">
     <a class="brand" href="./">XL <span>Chat</span></a>
     <nav>
-      <a href="index.html" class="active">浠嬬粛</a>
-      <a href="demo/">鐧诲綍婕旂ず</a>
+      <a href="index.html" class="active">介绍</a>
+      <a href="demo/">登录演示</a>
       <a href="https://github.com/XL1126/xlchat-login-skeleton" target="_blank" rel="noopener">GitHub</a>
     </nav>
   </header>
 
   <div class="wrap">
     <section class="hero">
-      <div class="eyebrow">Auth Skeleton 路 React 18 + Express 路 MIT</div>
-      <h1>XL Chat 鈥?鐧诲綍娉ㄥ唽绯荤粺</h1>
+      <div class="eyebrow">Auth Skeleton · React 18 + Express · MIT</div>
+      <h1>XL Chat — 登录注册系统</h1>
       <p class="lead">
-        鍓嶅悗绔垎绂荤殑鐢ㄦ埛璁よ瘉绯荤粺锛氭敞鍐屻€佺櫥褰曘€佸瘑鐮侀噸缃€傚綋鍓嶄负鍗婃垚鍝侊紙浠呰璇侊紝鑱婂ぉ涓诲姛鑳芥湭瀹炵幇锛夈€?        鏁版嵁搴?SQLite锛岄€傚悎鍗曟満灏忓瀷搴旂敤銆?      </p>
+        前后端分离的用户认证系统：注册、登录、密码重置。当前为半成品（仅认证，聊天主功能未实现）。
+        数据库 SQLite，适合单机小型应用。
+      </p>
       <div class="actions">
-        <a class="btn btn-primary" href="demo/">鎵撳紑鐧诲綍 UI 婕旂ず</a>
-        <a class="btn btn-ghost" href="https://github.com/XL1126/xlchat-login-skeleton" target="_blank" rel="noopener">鏌ョ湅婧愮爜</a>
+        <a class="btn btn-primary" href="demo/">打开登录 UI 演示</a>
+        <a class="btn btn-ghost" href="https://github.com/XL1126/xlchat-login-skeleton" target="_blank" rel="noopener">查看源码</a>
       </div>
     </section>
 
     <div class="callout">
-      <strong>婕旂ず涓庢簮鐮佺殑瀵瑰簲鍏崇郴锛?/strong>
-      <code>demo/</code> 鎸?<code>client/src</code> 妯″潡鎷嗗垎锛圓nimated / Logo / PasswordInput / Toast / AuthContext / pages/* / App / main锛夛紝
-      鏍峰紡涓?<code>App.css</code>銆?code>index.css</code> 涓€鑷达紱API 閿欒鏂囨瀵圭収 <code>server/index.js</code>銆?      鍏ュ満鍔ㄧ敾 1:1锛歮ount 鍚?<code>opacity:0</code> 鈫?<code>delay</code> 鍚庡啓鍏?      <code>animation: name 270ms ease-out forwards</code> + <code>animation-delay: delay</code>锛堝弻寤惰繜锛夛紝
-      keyframes 鍔ㄦ€佹敞鍏ワ紱鍚岃矾鐢?re-render 涓嶉噸鎾€?    </div>
+      <strong>演示与源码的对应关系：</strong>
+      <code>demo/</code> 按 <code>client/src</code> 模块拆分（Animated / Logo / PasswordInput / Toast / AuthContext / pages/* / App / main），
+      样式与 <code>App.css</code>、<code>index.css</code> 一致；API 错误文案对照 <code>server/index.js</code>。
+      入场动画 1:1：mount 后 <code>opacity:0</code> → <code>delay</code> 后写入
+      <code>animation: name 270ms ease-out forwards</code> + <code>animation-delay: delay</code>（双延迟），
+      keyframes 动态注入；同路由 re-render 不重播。
+    </div>
 
-    <h2>浠撳簱鎴浘</h2>
-    <img class="shot" src="assets/screenshot.png" alt="XL Chat 鐧诲綍椤垫埅鍥? />
+    <h2>仓库截图</h2>
+    <img class="shot" src="assets/screenshot.png" alt="XL Chat 登录页截图" />
 
-    <h2>Pages 绔欑偣鐩綍</h2>
-    <div class="tree">docs/                         鈫?GitHub Pages 鏍癸紙/docs锛?鈹溾攢鈹€ index.html                椤圭洰浠嬬粛
-鈹溾攢鈹€ assets/                   favicon 路 screenshot 路 XL-Chat.svg
-鈹溾攢鈹€ css/site.css              浠嬬粛绔欐牱寮?鈹斺攢鈹€ demo/                     鐧诲綍 UI 婕旂ず锛堝鐓?client/src锛?    鈹溾攢鈹€ index.html            搴旂敤澹筹紙瀵圭収 client/index.html锛?    鈹溾攢鈹€ css/app.css           index.css + App.css
-    鈹斺攢鈹€ js/
-        鈹溾攢鈹€ Animated.js       鈫?Animated.jsx锛?:1 鍔ㄧ敾锛?        鈹溾攢鈹€ Logo.js           鈫?Logo.jsx
-        鈹溾攢鈹€ PasswordInput.js  鈫?PasswordInput.jsx
-        鈹溾攢鈹€ Toast.js          鈫?Toast.jsx
-        鈹溾攢鈹€ AuthContext.js    鈫?AuthContext.jsx
-        鈹溾攢鈹€ api.js            鈫?server/index.js锛坙ocalStorage 妯℃嫙锛?        鈹溾攢鈹€ fields.js         琛ㄥ崟鍘熷瓙缁勪欢
-        鈹溾攢鈹€ pages/            SignIn 路 SignUp 路 ForgotPassword 路 ResetPassword 路 Home
-        鈹溾攢鈹€ router.js            鈫?router.jsx 璺敱
-        鈹斺攢鈹€ main.js           鈫?main.jsx</div>
+    <h2>Pages 站点目录</h2>
+    <div class="tree">docs/                         ← GitHub Pages 根（/docs）
+├── index.html                项目介绍
+├── assets/                   favicon · screenshot · XL-Chat.svg
+├── css/site.css              介绍站样式
+└── demo/                     登录 UI 演示（对照 client/src）
+    ├── index.html            应用壳（对照 client/index.html）
+    ├── css/app.css           index.css + App.css
+    └── js/
+        ├── Animated.js       ← Animated.jsx（1:1 动画）
+        ├── Logo.js           ← Logo.jsx
+        ├── PasswordInput.js  ← PasswordInput.jsx
+        ├── Toast.js          ← Toast.jsx
+        ├── AuthContext.js    ← AuthContext.jsx
+        ├── api.js            ← server/index.js（localStorage 模拟）
+        ├── fields.js         表单原子组件
+        ├── pages/            SignIn · SignUp · ForgotPassword · ResetPassword · Home
+        ├── router.js         ← App.jsx 路由
+        └── main.js           ← main.jsx</div>
 
-    <h2>鍔熻兘涓€瑙?/h2>
+    <h2>功能一览</h2>
     <div class="grid">
       <div class="card">
         <div class="tag">/api/sign_up</div>
-        <h3>娉ㄥ唽</h3>
-        <p>鐢ㄦ埛鍚?+ 閭 + 楠岃瘉鐮?+ 瀵嗙爜纭锛涘瘑鐮?鈮? 浣嶃€侀偖绠卞敮涓€銆侀獙璇佺爜鏈夋晥銆?/p>
+        <h3>注册</h3>
+        <p>用户名 + 邮箱 + 验证码 + 密码确认；密码 ≥6 位、邮箱唯一、验证码有效。</p>
       </div>
       <div class="card">
         <div class="tag">/api/sign_in</div>
-        <h3>鐧诲綍</h3>
-        <p>瀵嗙爜鐧诲綍 / 楠岃瘉鐮佺櫥褰曪紱杩斿洖 JWT 涓?user锛坕d / username / email锛夈€?/p>
+        <h3>登录</h3>
+        <p>密码登录 / 验证码登录；返回 JWT 与 user（id / username / email）。</p>
       </div>
       <div class="card">
         <div class="tag">/api/send_verification_code</div>
-        <h3>楠岃瘉鐮?/h3>
-        <p>6 浣嶃€? 鍒嗛挓鏈夋晥锛? 鍒嗛挓鍐呴噸澶嶈姹?鈫掋€岃绋嶇瓑5鍒嗛挓鍚庡啀璇曘€嶃€?/p>
+        <h3>验证码</h3>
+        <p>6 位、5 分钟有效；5 分钟内重复请求 →「请稍等5分钟后再试」。</p>
       </div>
       <div class="card">
         <div class="tag">/api/forgot_password</div>
-        <h3>蹇樿瀵嗙爜</h3>
-        <p>鎻愮ず銆屽鏋滈偖绠卞瓨鍦紝閲嶇疆閾炬帴宸插彂閫併€嶏紱token 15 鍒嗛挓鏈夋晥銆?/p>
+        <h3>忘记密码</h3>
+        <p>提示「如果邮箱存在，重置链接已发送」；token 15 分钟有效。</p>
       </div>
       <div class="card">
         <div class="tag">/api/reset_password</div>
-        <h3>閲嶇疆瀵嗙爜</h3>
-        <p><code>?token=...</code> 鏍￠獙鍚庤缃柊瀵嗙爜锛? 绉掑悗鍥炵櫥褰曢〉銆?/p>
+        <h3>重置密码</h3>
+        <p><code>?token=...</code> 校验后设置新密码，2 秒后回登录页。</p>
       </div>
       <div class="card">
         <div class="tag">UI</div>
-        <h3>娣辫壊璁よ瘉鐣岄潰</h3>
-        <p>绾粦搴曘€?6780FE銆乆L 瀛楁爣銆佽兌鍥婅緭鍏ャ€乀oast銆丄nimated 鍏€変竴鍏ュ満銆?/p>
+        <h3>深色认证界面</h3>
+        <p>纯黑底、#6780FE、XL 字标、胶囊输入、Toast、Animated 六选一入场。</p>
       </div>
     </div>
 
-    <h2>婕旂ず璺敱锛堝悓 router.jsx锛?/h2>
+    <h2>演示路由（同 App.jsx）</h2>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>椤甸潰</th><th>Hash 璺敱</th><th>document.title</th></tr></thead>
+        <thead><tr><th>页面</th><th>Hash 路由</th><th>document.title</th></tr></thead>
         <tbody>
-          <tr><td>鐧诲綍</td><td class="mono">#/sign_in</td><td>XL Chat - 鐧诲綍</td></tr>
-          <tr><td>娉ㄥ唽</td><td class="mono">#/sign_up</td><td>XL Chat - 娉ㄥ唽</td></tr>
-          <tr><td>蹇樿瀵嗙爜</td><td class="mono">#/forgot_password</td><td>XL Chat - 閲嶇疆瀵嗙爜</td></tr>
-          <tr><td>閲嶇疆瀵嗙爜</td><td class="mono">#/reset_password?token=</td><td>XL Chat - 閲嶇疆瀵嗙爜</td></tr>
-          <tr><td>鐧诲綍鎴愬姛</td><td class="mono">#/</td><td>XL Chat</td></tr>
+          <tr><td>登录</td><td class="mono">#/sign_in</td><td>XL Chat - 登录</td></tr>
+          <tr><td>注册</td><td class="mono">#/sign_up</td><td>XL Chat - 注册</td></tr>
+          <tr><td>忘记密码</td><td class="mono">#/forgot_password</td><td>XL Chat - 重置密码</td></tr>
+          <tr><td>重置密码</td><td class="mono">#/reset_password?token=</td><td>XL Chat - 重置密码</td></tr>
+          <tr><td>登录成功</td><td class="mono">#/</td><td>XL Chat</td></tr>
         </tbody>
       </table>
     </div>
 
-    <h2>鏈湴杩愯</h2>
+    <h2>本地运行</h2>
     <div class="arch">
 <pre>python setup.py
 cp .env.example .env
@@ -109,10 +120,10 @@ python launcher.py --bat
 # API   http://localhost:3000</pre>
     </div>
 
-    <h2>閾炬帴</h2>
+    <h2>链接</h2>
     <div class="sites">
-      <a href="demo/">鐧诲綍 UI 婕旂ず</a>
-      <a href="https://github.com/XL1126/xlchat-login-skeleton" target="_blank" rel="noopener">婧愮爜</a>
+      <a href="demo/">登录 UI 演示</a>
+      <a href="https://github.com/XL1126/xlchat-login-skeleton" target="_blank" rel="noopener">源码</a>
       <a href="https://github.com/XL1126/xlchat-login-skeleton/blob/main/client/src/components/Animated.jsx" target="_blank" rel="noopener">Animated.jsx</a>
       <a href="https://github.com/XL1126/xlchat-login-skeleton/blob/main/client/src/App.css" target="_blank" rel="noopener">App.css</a>
       <a href="https://github.com/XL1126/xlchat-login-skeleton/blob/main/server/index.js" target="_blank" rel="noopener">server/index.js</a>
@@ -120,9 +131,8 @@ python launcher.py --bat
   </div>
 
   <footer>
-    浠嬬粛 + UI 婕旂ず 路
+    介绍 + UI 演示 ·
     <a href="https://github.com/XL1126/xlchat-login-skeleton" target="_blank" rel="noopener">github.com/XL1126/xlchat-login-skeleton</a>
   </footer>
 </body>
 </html>
-
