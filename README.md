@@ -11,6 +11,20 @@
   <strong>数据库使用SQLite：轻量但不支持高并发、分布式部署，仅适合单机小型应用，无法应对用户量增长</strong>
 </p>
 
+
+<p align="center">
+  <a href="https://xl1126.github.io/xlchat-login-skeleton/"><img src="https://img.shields.io/badge/在线介绍站-Live-8B7CF8?style=for-the-badge&logo=googlechrome&logoColor=white" alt="介绍站"></a>
+  <a href="https://xl1126.github.io/xlchat-login-skeleton/demo/"><img src="https://img.shields.io/badge/登录UI演示-Demo-6B5CE7?style=for-the-badge&logo=ghostty&logoColor=white" alt="登录演示"></a>
+  <a href="https://github.com/XL1126/xlchat-login-skeleton"><img src="https://img.shields.io/badge/GitHub-Source-24292F?style=for-the-badge&logo=github&logoColor=white" alt="源码"></a>
+</p>
+
+<p align="center">
+  <b>快速跳转</b>：<a href="https://xl1126.github.io/xlchat-login-skeleton/">介绍站</a> ·
+  <a href="https://xl1126.github.io/xlchat-login-skeleton/demo/">登录 UI 演示</a> ·
+  <a href="https://xl1126.github.io/xlchat-login-skeleton/demo/#/sign_in">#/sign_in</a> ·
+  <a href="https://xl1126.github.io/xlchat-login-skeleton/demo/#/sign_up">#/sign_up</a>
+</p>
+
 ## 📋 项目简介
 
 XL Chat 是一个现代化的用户认证系统，采用前后端分离架构实现。目前已完成登录、注册、密码重置等核心功能，可作为完整聊天系统的前端入口。
