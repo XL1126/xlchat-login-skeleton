@@ -1,4 +1,4 @@
-/* App.jsx — ProtectedRoute / PublicRoute / Routes；BrowserRouter → hash 路由 */
+* App.jsx — ProtectedRoute / PublicRoute / Routes；BrowserRouter → hash 路由 */
 (function (global) {
   'use strict';
 

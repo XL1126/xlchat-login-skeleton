@@ -1,4 +1,4 @@
-/* client/src/index.css + client/src/App.css
+* client/src/index.css + client/src/App.css
  * 1:1 复刻；Animated 的 @keyframes 由 js/Animated.js 动态注入（同 Animated.jsx） */
 
 * {

@@ -1,4 +1,4 @@
-/* main.jsx */
+* main.jsx */
 (function (global) {
   'use strict';
 

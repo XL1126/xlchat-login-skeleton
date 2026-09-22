@@ -1,4 +1,4 @@
-/* server/index.js — 无 Node/SQLite/SMTP 时的浏览器模拟；
+* server/index.js — 无 Node/SQLite/SMTP 时的浏览器模拟；
  * 错误文案、校验规则、成功结构与 Express 实现对齐。
  */
 (function (global) {

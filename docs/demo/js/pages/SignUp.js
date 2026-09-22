@@ -1,4 +1,4 @@
-/* pages/SignUp.jsx */
+* pages/SignUp.jsx */
 (function (global) {
   'use strict';
 
